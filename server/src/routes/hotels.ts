@@ -60,4 +60,33 @@ router.get("/:id", async (req, res) => {
 	res.json(hotels.rows);
 });
 
+// post hotel at localhost:4040/hotels
+// providing name, chain, stars, numRooms, address, manager in request query string
+router.post("/", async (req, res) => {
+	const { rows } = await pool.query<Hotel>(
+		`INSERT INTO hotel (
+		name,
+		chain,
+		stars,
+		numRooms,
+		address,
+		manager
+	) 
+	VALUES(
+		$1, $2, $3, $4, $5, $6
+	)
+	RETURNING *`,
+		[
+			req.query.name,
+			req.query.chain,
+			req.query.stars,
+			req.query.numRooms,
+			req.query.address,
+			req.query.manager,
+		]
+	);
+
+	res.json(rows[0]);
+});
+
 export { router };
