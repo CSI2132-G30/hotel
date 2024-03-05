@@ -17,23 +17,24 @@ declare global {
 	};
 }
 
-// This creates the customer table
-pool.query(`CREATE TABLE IF NOT EXISTS customer (
+(async () => {
+	// This creates the customer table
+	await pool.query(`CREATE TABLE IF NOT EXISTS customer (
 	ssn SMALLINT PRIMARY KEY ,
 	name TEXT,
 	username TEXT,
 	password TEXT
 )`);
 
-pool.query(`CREATE TABLE IF NOT EXISTS employee (
+	await pool.query(`CREATE TABLE IF NOT EXISTS employee (
 	ssn SMALLINT PRIMARY KEY,
 	name TEXT,
 	username TEXT,
 	password TEXT
 )`);
 
-// This creates the chain table
-pool.query(`CREATE TABLE IF NOT EXISTS CHAIN (
+	// This creates the chain table
+	await pool.query(`CREATE TABLE IF NOT EXISTS CHAIN (
 	name TEXT PRIMARY KEY,
 	num_hotels SMALLINT,
 	hq_address TEXT,
@@ -41,8 +42,8 @@ pool.query(`CREATE TABLE IF NOT EXISTS CHAIN (
 	phone_num TEXT
 )`);
 
-// This creates the hotel table
-pool.query(`CREATE TABLE IF NOT EXISTS hotel (
+	// This creates the hotel table
+	await pool.query(`CREATE TABLE IF NOT EXISTS hotel (
 	id SMALLINT PRIMARY KEY,
 	name TEXT,
 	CHAIN TEXT REFERENCES CHAIN(name),
@@ -52,8 +53,8 @@ pool.query(`CREATE TABLE IF NOT EXISTS hotel (
 	manager SMALLINT REFERENCES employee(ssn)
 )`);
 
-// This creates the room table
-pool.query(`CREATE TABLE IF NOT EXISTS room (
+	// This creates the room table
+	await pool.query(`CREATE TABLE IF NOT EXISTS room (
 	id SMALLINT PRIMARY KEY,
 	hotel SMALLINT REFERENCES hotel(id),
 	number INTEGER,
@@ -65,8 +66,8 @@ pool.query(`CREATE TABLE IF NOT EXISTS room (
 	damage BOOLEAN
 )`);
 
-// This creates the booking table
-pool.query(`CREATE TABLE IF NOT EXISTS booking (
+	// This creates the booking table
+	await pool.query(`CREATE TABLE IF NOT EXISTS booking (
 	room_id SMALLINT REFERENCES room(id),
 	customer_id SMALLINT REFERENCES customer(ssn),
 	start_date DATE,
@@ -74,6 +75,75 @@ pool.query(`CREATE TABLE IF NOT EXISTS booking (
 	checked_in BOOLEAN,
 	PRIMARY KEY (room_id, customer_id, start_date)
 )`);
+	await pool.query(`INSERT INTO customer (ssn, name, username, password)
+VALUES
+(101, 'Alice Johnson', 'alice', 'pass123'),
+(102, 'Bob Smith', 'bob', 'pass456')`);
+
+	await pool.query(`INSERT INTO employee (ssn, name, username, password)
+VALUES
+(1, 'John Doe', 'johndoe', 'password123'),
+(2, 'Jane Smith', 'janesmith', 'abc123')`);
+
+	await pool.query(`INSERT INTO CHAIN  (
+	name,
+	num_hotels,
+	hq_address,
+	email,
+	phone_num
+)
+VALUES
+('Chain1', 123, '123 A St.', 'chain@A.com', '123-456-7890'),
+('Chain2', 123, '123 B St.', 'chain@B.com', '123-456-7890'),
+('Chain3', 123, '123 C St.', 'chain@C.com', '123-456-7890'),
+('Chain4', 123, '123 D St.', 'chain@D.com', '123-456-7890'),
+('Chain5', 123, '123 E St.', 'chain@E.com', '123-456-7890')`);
+
+	await pool.query(`INSERT INTO hotel (
+	id,
+	name,
+	CHAIN,
+	stars,
+	num_rooms,
+	address,
+	manager
+)
+VALUES
+(1, 'Hotel1', 'Chain1', 4, 50, 'Address 1', 1),
+(2, 'Hotel2', 'Chain1', 3, 60, 'Address 2', 2),
+(3, 'Hotel3', 'Chain1', 5, 70, 'Address 3', 1),
+(4, 'Hotel4', 'Chain1', 4, 80, 'Address 4', 2),
+(5, 'Hotel5', 'Chain2', 4, 55, 'Address 5', 1),
+(6, 'Hotel6', 'Chain2', 3, 65, 'Address 6', 2),
+(7, 'Hotel7', 'Chain2', 5, 75, 'Address 7', 1),
+(8, 'Hotel8', 'Chain2', 4, 85, 'Address 8', 2),
+(9, 'Hotel9', 'Chain3', 4, 58, 'Address 9', 1),
+(10, 'Hotel10', 'Chain3', 3, 68, 'Address 10', 2),
+(11, 'Hotel11', 'Chain3', 5, 78, 'Address 11', 1),
+(12, 'Hotel12', 'Chain3', 4, 88, 'Address 12', 2),
+(13, 'Hotel13', 'Chain4', 4, 56, 'Address 13', 1),
+(14, 'Hotel14', 'Chain4', 3, 66, 'Address 14', 2),
+(15, 'Hotel15', 'Chain4', 5, 76, 'Address 15', 1),
+(16, 'Hotel16', 'Chain4', 4, 86, 'Address 16', 2),
+(17, 'Hotel17', 'Chain5', 4, 59, 'Address 17', 1),
+(18, 'Hotel18', 'Chain5', 3, 69, 'Address 18', 2),
+(19, 'Hotel19', 'Chain5', 5, 79, 'Address 19', 1),
+(20, 'Hotel20', 'Chain5', 4, 89, 'Address 20', 2)
+`);
+
+	await pool.query(`INSERT INTO room (id, hotel, number, price, capacity, view, amenities, extendible, damage)
+VALUES
+(1, 1, 101, 100, 2, 'City View', ARRAY['WiFi', 'TV'], TRUE, FALSE),
+(2, 1, 102, 150, 4, 'Ocean View', ARRAY['WiFi', 'TV', 'Mini Bar'], TRUE, FALSE),
+(3, 1, 103, 200, 6, 'Mountain View', ARRAY['WiFi', 'TV', 'Jacuzzi'], TRUE, FALSE),
+(4, 1, 104, 120, 3, 'City View', ARRAY['WiFi', 'TV'], TRUE, FALSE),
+(5, 1, 105, 90, 2, 'City View', ARRAY['WiFi', 'TV'], TRUE, FALSE)`);
+
+	await pool.query(`INSERT INTO booking (room_id, customer_id, start_date, end_date, checked_in)
+VALUES
+(1, 101, '2024-03-05', '2024-03-10', TRUE),
+(2, 102, '2024-03-08', '2024-03-15', TRUE);`);
+})();
 
 const app = express();
 
