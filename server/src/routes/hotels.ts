@@ -3,45 +3,123 @@ import { pool } from "../database";
 
 const router = express.Router();
 
-// This creates the hotel table
+// This creates the employee table
 // to do any any query write pool.query which returns a promise of the query result
-pool.query(`CREATE TABLE IF NOT EXISTS hotels (
+pool.query(`CREATE TABLE IF NOT EXISTS employee (
+	ssn SMALLINT,
+	name TEXT,
+	user_name TEXT,
+	password TEXT,
+	PRIMARY KEY (ssn)
+)`);
+
+// This creates the chain table
+pool.query(`CREATE TABLE IF NOT EXISTS chain (
+	name TEXT,
+	num_hotels SMALLINT,
+	hq_address TEXT,
+	email TEXT,
+	phone_num TEXT,
+	PRIMARY KEY (name)
+)`);
+
+// This creates the hotel table
+// Need to add back this line: FOREIGN KEY (manager) REFERENCES employee(ssn),
+pool.query(`CREATE TABLE IF NOT EXISTS hotel (
 	id SERIAL PRIMARY KEY,
 	name TEXT,
 	chain TEXT,
 	stars SMALLINT,
 	numRooms SMALLINT,
 	address TEXT,
-	manager SMALLINT
+	manager SMALLINT,
+	FOREIGN KEY (chain) REFERENCES chain(name)
 )`);
 
-// random query you can delete later
-// just to test stuff
-pool.query(`INSERT INTO hotel (
-	name,
-	chain,
-	stars,
-	numRooms,
-	address,
-	manager
-) 
-VALUES(
-	'some hotel',
-	'the best chain ever',
-	5,
-	100,
-	'100 washington ave',
-	'23'
-),
-(
-	'some hotel2',
-	'the best chain ever',
-	5,
-	100,
-	'100 washington ave',
-	'23'
-)
-`);
+// This creates the room table
+pool.query(`CREATE TABLE IF NOT EXISTS room (
+	id SMALLINT,
+	hotel SMALLINT,
+	number INTEGER,
+	price FLOAT,
+	capacity INTEGER,
+	view TEXT,
+	amenitites TEXT,
+	extendible BOOLEAN,
+	damage BOOLEAN,
+	PRIMARY KEY (id),
+	FOREIGN KEY (hotel) REFERENCES hotel(id)
+)`);
+
+// This creates the customer table
+pool.query(`CREATE TABLE IF NOT EXISTS customer (
+	ssn SMALLINT,
+	name TEXT,
+	user_name TEXT,
+	password TEXT,
+	PRIMARY KEY (ssn)
+)`);
+
+// This creates the booking table
+pool.query(`CREATE TABLE IF NOT EXISTS booking (
+	room_id SMALLINT,
+	customer SMALLINT,
+	start_date DATE,
+	end_date DATE,
+	checked_in BOOLEAN,
+	PRIMARY KEY (room_id, customer, start_date),
+	FOREIGN KEY (room_id) REFERENCES room(id),
+	FOREIGN KEY (customer) REFERENCES customer(ssn)
+)`);
+
+// This adds some example chains
+// pool.query(`INSERT INTO chain IF NOT EXISTS(
+// 	name,
+// 	num_hotels,
+// 	hq_address,
+// 	email,
+// 	phone_num
+// ) 
+// VALUES(
+// 	'Princeton and Key',
+// 	1,
+// 	'31 Bay St',
+// 	'customerinfo@princetonandkey.com',
+// 	'3330000'
+// ),
+// (
+// 	'Groupe Deluxe',
+// 	1,
+// 	'82 rue Sherbrooke',
+// 	'aide@groupedeluxe.ca',
+// 	'514'
+// )
+// `);
+
+// // This adds some example hotels
+// pool.query(`INSERT INTO hotel (
+// 	name,
+// 	chain,
+// 	stars,
+// 	numRooms,
+// 	address,
+// 	manager
+// )
+// VALUES(
+// 	'Grand Ottawa Hotel',
+// 	'Princeton and Key',
+// 	5,
+// 	127,
+// 	'23 Sussex Drive',
+// ),
+// (
+// 	'The Luxor Toronto',
+// 	'Groupe Deluxe',
+// 	5,
+// 	243,
+// 	'100 Adelaide St',
+// )
+// `);
 
 // Example query to get all hotels
 // this is async function
