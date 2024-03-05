@@ -1,44 +1,30 @@
+import HotelCard from "./HotelCard";
+
 export default function App() {
 	return (
-		<body className = 'bg-white fill'>
-			<h1>
-				Five Chains
-			</h1>
-			<h1>
-				Fourteen Locations
-			</h1>
-			<h1>
-				Three Amazing Cities
-			</h1>
-			<div className="card w-96 bg-base-100 shadow-xl">
-				<figure><img src="images/montreal.jpg" alt="Shoes" /></figure>
-				<div className="card-body">
-					<h2 className="card-title">Montreal</h2>
-					<div className="card-actions justify-end">
-						<button className="btn btn-primary">View Hotels</button>
-					</div>
-				</div>
+		<>
+			<div className='flex-column text-center'>
+				<h1 className='text-center text-6xl py-8'>
+					Many Hotels to Choose From!
+				</h1>
 			</div>
-			<div className="card w-96 bg-base-100 shadow-xl">
-				<figure><img src="images/toronto.jpg" alt="Shoes" /></figure>
-				<div className="card-body">
-					<h2 className="card-title">Toronto</h2>
-					<p>If a dog chews shoes whose shoes does he choose?</p>
-					<div className="card-actions justify-end">
-						<button className="btn btn-primary">View Hotels</button>
-					</div>
-				</div>
+			<div className='flex flex-wrap items-center justify-center gap-5 relative'>
+				<HotelCard
+					img={"/toronto.jpg"}
+					name={"Toronto"}
+					desc={"The stunning city"}
+					link={"https://google.ca"}></HotelCard>
+				<HotelCard
+					img={"/montreal.jpg"}
+					name={"Montreal"}
+					desc={"The stunning city"}
+					link={"https://google.ca"}></HotelCard>
+				<HotelCard
+					img={"/ottawa.jpg"}
+					name={"Ottawa"}
+					desc={"The stunning city"}
+					link={"https://google.ca"}></HotelCard>
 			</div>
-			<div className="card w-96 bg-base-100 shadow-xl">
-				<figure><img src="images/ottawa.jpg" alt="Shoes" /></figure>
-				<div className="card-body">
-					<h2 className="card-title">Ottawa</h2>
-					<p>If a dog chews shoes whose shoes does he choose?</p>
-					<div className="card-actions justify-end">
-						<button className="btn btn-primary">View Hotels</button>
-					</div>
-				</div>
-			</div>
-		</body>
+		</>
 	);
 }
