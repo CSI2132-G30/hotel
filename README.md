@@ -34,3 +34,12 @@ Inside the server directory, run:
 ```
 pnpm dev
 ```
+
+# Running the app, development
+Inside the root directory, run:
+```
+pnpm dev
+```
+
+# Running the app, production
+Visit https://hotel-59i.pages.dev/
