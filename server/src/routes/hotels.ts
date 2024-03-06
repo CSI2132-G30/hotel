@@ -49,4 +49,23 @@ router.post("/", async (req, res) => {
 	res.json(rows[0]);
 });
 
+// post booking
+router.post("/booking", async (req, res) => {
+	const { rows } = await pool.query<Booking>(
+		`INSERT INTO booking (room_id, customer_id, start_date, end_date, checked_in)
+		VALUES
+		($1, $2, $3, $4, $5),
+`,
+		[
+			req.query.room_id,
+			req.query.customer_id,
+			req.query.start_date,
+			req.query.end_date,
+			req.query.checked_in,
+		]
+	);
+
+	res.json(rows[0]);
+});
+
 export { router };
