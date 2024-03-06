@@ -15,6 +15,14 @@ declare global {
 		address: string;
 		manager: number;
 	};
+
+	export type Booking = {
+		room_id: number;
+		customer_id: number;
+		start_date: Date;
+		end_date: Date;
+		checked_in: boolean;
+	};
 }
 
 (async () => {
@@ -44,7 +52,7 @@ declare global {
 
 	// This creates the hotel table
 	await pool.query(`CREATE TABLE IF NOT EXISTS hotel (
-	id SMALLINT PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	name TEXT,
 	CHAIN TEXT REFERENCES CHAIN(name),
 	stars SMALLINT,
@@ -55,7 +63,7 @@ declare global {
 
 	// This creates the room table
 	await pool.query(`CREATE TABLE IF NOT EXISTS room (
-	id SMALLINT PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	hotel SMALLINT REFERENCES hotel(id),
 	number INTEGER,
 	price FLOAT,
@@ -138,11 +146,6 @@ VALUES
 (3, 1, 103, 200, 6, 'Mountain View', ARRAY['WiFi', 'TV', 'Jacuzzi'], TRUE, FALSE),
 (4, 1, 104, 120, 3, 'City View', ARRAY['WiFi', 'TV'], TRUE, FALSE),
 (5, 1, 105, 90, 2, 'City View', ARRAY['WiFi', 'TV'], TRUE, FALSE)`);
-
-	await pool.query(`INSERT INTO booking (room_id, customer_id, start_date, end_date, checked_in)
-VALUES
-(1, 101, '2024-03-05', '2024-03-10', TRUE),
-(2, 102, '2024-03-08', '2024-03-15', TRUE);`);
 })();
 
 const app = express();
