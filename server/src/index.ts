@@ -71,7 +71,7 @@ declare global {
 	// This creates the room table
 	await pool.query(`CREATE TABLE IF NOT EXISTS room (
 	id SERIAL PRIMARY KEY,
-	hotel SMALLINT REFERENCES hotel(id),
+	hotel TEXT REFERENCES hotel(name),
 	number INTEGER,
 	price FLOAT,
 	capacity INTEGER,
@@ -167,11 +167,11 @@ VALUES
 
 	await pool.query(`INSERT INTO room (id, hotel, number, price, capacity, view, amenities, extendible, damage)
 VALUES
-(1, 1, 101, 100, 2, 'City View', ARRAY['WiFi', 'TV'], TRUE, FALSE),
-(2, 1, 102, 150, 4, 'Ocean View', ARRAY['WiFi', 'TV', 'Mini Bar'], TRUE, FALSE),
-(3, 1, 103, 200, 6, 'Mountain View', ARRAY['WiFi', 'TV', 'Jacuzzi'], TRUE, FALSE),
-(4, 1, 104, 120, 3, 'City View', ARRAY['WiFi', 'TV'], TRUE, FALSE),
-(5, 1, 105, 90, 2, 'City View', ARRAY['WiFi', 'TV'], TRUE, FALSE)`);
+('Hotel1', 101, 100, 2, 'City View', ARRAY['WiFi', 'TV'], TRUE, FALSE),
+('Hotel2', 102, 150, 4, 'Ocean View', ARRAY['WiFi', 'TV', 'Mini Bar'], TRUE, FALSE),
+('Hotel3', 103, 200, 6, 'Mountain View', ARRAY['WiFi', 'TV', 'Jacuzzi'], TRUE, FALSE),
+('Hotel4', 104, 120, 3, 'City View', ARRAY['WiFi', 'TV'], TRUE, FALSE),
+('Hotel5', 105, 90, 2, 'City View', ARRAY['WiFi', 'TV'], TRUE, FALSE)`);
 })();
 
 const app = express();
