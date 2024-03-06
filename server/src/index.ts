@@ -23,6 +23,13 @@ declare global {
 		end_date: Date;
 		checked_in: boolean;
 	};
+
+	export type User = {
+		ssn: number;
+		name: string;
+		username: string;
+		password: string;
+	};
 }
 
 (async () => {
@@ -108,7 +115,6 @@ VALUES
 ('Chain5', 123, '123 E St.', 'chain@E.com', '123-456-7890')`);
 
 	await pool.query(`INSERT INTO hotel (
-	id,
 	name,
 	CHAIN,
 	stars,
@@ -117,26 +123,46 @@ VALUES
 	manager
 )
 VALUES
-(1, 'Hotel1', 'Chain1', 4, 50, 'Address 1', 1),
-(2, 'Hotel2', 'Chain1', 3, 60, 'Address 2', 2),
-(3, 'Hotel3', 'Chain1', 5, 70, 'Address 3', 1),
-(4, 'Hotel4', 'Chain1', 4, 80, 'Address 4', 2),
-(5, 'Hotel5', 'Chain2', 4, 55, 'Address 5', 1),
-(6, 'Hotel6', 'Chain2', 3, 65, 'Address 6', 2),
-(7, 'Hotel7', 'Chain2', 5, 75, 'Address 7', 1),
-(8, 'Hotel8', 'Chain2', 4, 85, 'Address 8', 2),
-(9, 'Hotel9', 'Chain3', 4, 58, 'Address 9', 1),
-(10, 'Hotel10', 'Chain3', 3, 68, 'Address 10', 2),
-(11, 'Hotel11', 'Chain3', 5, 78, 'Address 11', 1),
-(12, 'Hotel12', 'Chain3', 4, 88, 'Address 12', 2),
-(13, 'Hotel13', 'Chain4', 4, 56, 'Address 13', 1),
-(14, 'Hotel14', 'Chain4', 3, 66, 'Address 14', 2),
-(15, 'Hotel15', 'Chain4', 5, 76, 'Address 15', 1),
-(16, 'Hotel16', 'Chain4', 4, 86, 'Address 16', 2),
-(17, 'Hotel17', 'Chain5', 4, 59, 'Address 17', 1),
-(18, 'Hotel18', 'Chain5', 3, 69, 'Address 18', 2),
-(19, 'Hotel19', 'Chain5', 5, 79, 'Address 19', 1),
-(20, 'Hotel20', 'Chain5', 4, 89, 'Address 20', 2)
+('Hotel1', 'Chain1', 4, 50, 'Address 1', 1),
+('Hotel2', 'Chain1', 3, 60, 'Address 2', 2),
+('Hotel3', 'Chain1', 5, 70, 'Address 3', 1),
+('Hotel4', 'Chain1', 4, 80, 'Address 4', 2),
+('Hotel5', 'Chain2', 4, 55, 'Address 5', 1),
+('Hotel6', 'Chain2', 3, 65, 'Address 6', 2),
+('Hotel7', 'Chain2', 5, 75, 'Address 7', 1),
+('Hotel8', 'Chain2', 4, 85, 'Address 8', 2),
+('Hotel9', 'Chain3', 4, 58, 'Address 9', 1),
+('Hotel10', 'Chain3', 3, 68, 'Address 10', 2),
+('Hotel11', 'Chain3', 5, 78, 'Address 11', 1),
+('Hotel12', 'Chain3', 4, 88, 'Address 12', 2),
+('Hotel13', 'Chain4', 4, 56, 'Address 13', 1),
+('Hotel14', 'Chain4', 3, 66, 'Address 14', 2),
+('Hotel15', 'Chain4', 5, 76, 'Address 15', 1),
+('Hotel16', 'Chain4', 4, 86, 'Address 16', 2),
+('Hotel17', 'Chain5', 4, 59, 'Address 17', 1),
+('Hotel18', 'Chain5', 3, 69, 'Address 18', 2),
+('Hotel19', 'Chain5', 5, 79, 'Address 19', 1),
+('Hotel20', 'Chain5', 4, 89, 'Address 20', 2),
+('Hotel1A', 'Chain1', 4, 50, 'Address 1', 1),
+('Hotel2A', 'Chain1', 3, 60, 'Address 2', 2),
+('Hotel3A', 'Chain1', 5, 70, 'Address 3', 1),
+('Hotel4A', 'Chain1', 4, 80, 'Address 4', 2),
+('Hotel5A', 'Chain2', 4, 55, 'Address 5', 1),
+('Hotel6A', 'Chain2', 3, 65, 'Address 6', 2),
+('Hotel7A', 'Chain2', 5, 75, 'Address 7', 1),
+('Hotel8A', 'Chain2', 4, 85, 'Address 8', 2),
+('Hotel9A', 'Chain3', 4, 58, 'Address 9', 1),
+('Hotel10A', 'Chain3', 3, 68, 'Address 10', 2),
+('Hotel11A', 'Chain3', 5, 78, 'Address 11', 1),
+('Hotel12A', 'Chain3', 4, 88, 'Address 12', 2),
+('Hotel13A', 'Chain4', 4, 56, 'Address 13', 1),
+('Hotel14A', 'Chain4', 3, 66, 'Address 14', 2),
+('Hotel15A', 'Chain4', 5, 76, 'Address 15', 1),
+('Hotel16A', 'Chain4', 4, 86, 'Address 16', 2),
+('Hotel17A', 'Chain5', 4, 59, 'Address 17', 1),
+('Hotel18A', 'Chain5', 3, 69, 'Address 18', 2),
+('Hotel19A', 'Chain5', 5, 79, 'Address 19', 1),
+('Hotel20A', 'Chain5', 4, 89, 'Address 20', 2)
 `);
 
 	await pool.query(`INSERT INTO room (id, hotel, number, price, capacity, view, amenities, extendible, damage)
