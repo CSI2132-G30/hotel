@@ -54,7 +54,8 @@ router.post("/booking", async (req, res) => {
 	const { rows } = await pool.query<Booking>(
 		`INSERT INTO booking (room_id, customer_id, start_date, end_date, checked_in)
 		VALUES
-		($1, $2, $3, $4, $5),
+		($1, $2, $3, $4, $5)
+		RETURNING *
 `,
 		[
 			req.query.room_id,
@@ -63,6 +64,21 @@ router.post("/booking", async (req, res) => {
 			req.query.end_date,
 			req.query.checked_in,
 		]
+	);
+
+	res.json(rows[0]);
+});
+
+// create customer
+// need to add employee
+router.post("/create", async (req, res) => {
+	const { rows } = await pool.query<User>(
+		`INSERT INTO customer (ssn, name, username, password)
+		VALUES
+		($1, $2, $3, $4)
+		RETURNING *
+`,
+		[req.query.ssn, req.query.name, req.query.username, req.query.password]
 	);
 
 	res.json(rows[0]);
