@@ -165,7 +165,7 @@ VALUES
 ('Hotel20A', 'Chain5', 4, 89, 'Address 20', 2)
 `);
 
-	await pool.query(`INSERT INTO room (id, hotel, number, price, capacity, view, amenities, extendible, damage)
+	await pool.query(`INSERT INTO room (hotel, number, price, capacity, view, amenities, extendible, damage)
 VALUES
 ('Hotel1', 101, 100, 2, 'City View', ARRAY['WiFi', 'TV'], TRUE, FALSE),
 ('Hotel2', 102, 150, 4, 'Ocean View', ARRAY['WiFi', 'TV', 'Mini Bar'], TRUE, FALSE),
