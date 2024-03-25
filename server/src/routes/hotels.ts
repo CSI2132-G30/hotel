@@ -13,10 +13,16 @@ router.get("/", async (req, res) => {
 });
 
 // get query by id
-router.get("/:id", async (req, res) => {
+router.get("/getid/:id", async (req, res) => {
 	const hotels = await pool.query<Hotel>("SELECT * FROM hotel WHERE id = $1", [
 		req.params.id,
 	]);
+	res.json(hotels.rows);
+});
+
+//Display chains
+router.get("/chains", async (req, res) => {
+	const hotels = await pool.query<Hotel>("SELECT * FROM chain");
 	res.json(hotels.rows);
 });
 
