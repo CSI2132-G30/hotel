@@ -31,7 +31,10 @@ export default function App() {
 							</figure>
 							<div className='card-body'>
 								<h2 className='card-title'>{chain.name}</h2>
+								<p>Number of hotels: {chain.num_hotels}</p>
 								<p>{chain.hq_address}</p>
+								<p>{chain.phone_num}</p>
+								<p>{chain.email}</p>
 								<div className='card-actions justify-end'></div>
 							</div>
 						</div>

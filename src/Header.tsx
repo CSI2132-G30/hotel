@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Header() {
 	return (
 		<div className='navbar bg-base-100'>
@@ -7,23 +9,13 @@ export default function Header() {
 			<div className='flex-none'>
 				<ul className='menu menu-horizontal px-1'>
 					<li>
-						<a>About</a>
+						<a><Link className="nav-link font-weight-bold" to={`/`}>Home</Link></a>
 					</li>
 					<li>
-						<details>
-							<summary>Book Now</summary>
-							<ul className='p-2 bg-base-100 rounded-t-none'>
-								<li>
-									<a>Montreal</a>
-								</li>
-								<li>
-									<a>Toronto</a>
-								</li>
-								<li>
-									<a>Ottawa</a>
-								</li>
-							</ul>
-						</details>
+						<a><Link className="nav-link font-weight-bold" to={`/account`}>Account</Link></a>
+					</li>
+					<li>
+						<a><Link className="nav-link font-weight-bold" to={`/bookings`}>Book Now</Link></a>
 					</li>
 				</ul>
 			</div>
