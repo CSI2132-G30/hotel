@@ -37,6 +37,7 @@ import { pool } from "./database";
 	name TEXT,
 	CHAIN SMALLINT REFERENCES CHAIN(id),
 	stars SMALLINT,
+	city TEXT,
 	num_rooms SMALLINT,
 	address TEXT,
 	manager TEXT REFERENCES employee(ssn)
