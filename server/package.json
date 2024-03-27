@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"dev": "nodemon ./src/index.ts"
+		"dev": "nodemon -e ts --exec \"tsc && node dist/index.js\"",
+		"start": "pnpm"
 	},
 	"keywords": [],
 	"author": "",
