@@ -96,4 +96,20 @@ router.post("/create", async (req, res) => {
 	res.json(rows[0]);
 });
 
+router.get("/average", async (req, res) => {
+	const average = await pool.query(
+		"SELECT AVG(price) FROM room WHERE hotel = $1",
+		[req.query.id]
+	);
+	res.json(average.rows);
+});
+
+router.get("/sale", async (req, res) => {
+	const average = await pool.query(
+		"SELECT * FROM room WHERE price < (SELECT AVG(price) FROM room)",
+		[req.query.id]
+	);
+	res.json(average.rows);
+});
+
 export { router };
