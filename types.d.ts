@@ -34,7 +34,7 @@ declare global {
 	};
 
 	type User = {
-		ssn: number;
+		ssn: string;
 		name: string;
 		username: string;
 		password: string;

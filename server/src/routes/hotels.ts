@@ -19,6 +19,12 @@ router.get("/chains", async (req, res) => {
 });
 
 // get hotel by id
+router.get("/customers", async (req, res) => {
+	const hotels = await pool.query<Hotel>("SELECT * FROM customer");
+	res.json(hotels.rows);
+});
+
+// get hotel by id
 router.get("/:id", async (req, res) => {
 	const hotels = await pool.query<Hotel>("SELECT * FROM hotel WHERE id = $1", [
 		req.params.id,
@@ -80,10 +86,10 @@ router.post("/booking", async (req, res) => {
 router.post("/create", async (req, res) => {
 	const { rows } = await pool.query<User>(
 		`INSERT INTO customer (ssn, name, username, password)
-		VALUES
-		($1, $2, $3, $4)
-		RETURNING *
-`,
+			VALUES
+			($1, $2, $3, $4)
+			RETURNING *
+	`,
 		[req.query.ssn, req.query.name, req.query.username, req.query.password]
 	);
 
