@@ -23,7 +23,7 @@ import { pool } from "./database";
 
 	// This creates the chain table
 	await pool.query(`CREATE TABLE IF NOT EXISTS CHAIN (
-	id SERIAL PRIMARY KEY,
+	id SMALLINT PRIMARY KEY,
 	name TEXT,
 	num_hotels SMALLINT,
 	hq_address TEXT,
@@ -35,18 +35,18 @@ import { pool } from "./database";
 	await pool.query(`CREATE TABLE IF NOT EXISTS hotel (
 	id SERIAL PRIMARY KEY,
 	name TEXT,
-	CHAIN SMALLINT REFERENCES CHAIN(id),
-	stars SMALLINT,
+	CHAIN SMALLINT REFERENCES CHAIN(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	stars DOUBLE,
 	city TEXT,
 	num_rooms SMALLINT,
 	address TEXT,
-	manager TEXT REFERENCES employee(ssn)
+	manager TEXT REFERENCES employee(ssn) ON UPDATE CASCADE ON DELETE CASCADE
 )`);
 
 	// This creates the room table
 	await pool.query(`CREATE TABLE IF NOT EXISTS room (
 	id SERIAL PRIMARY KEY,
-	hotel SMALLINT REFERENCES hotel(id),
+	hotel SMALLINT REFERENCES hotel(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	number INTEGER,
 	price FLOAT,
 	capacity INTEGER,
@@ -58,28 +58,14 @@ import { pool } from "./database";
 
 	// This creates the booking table
 	await pool.query(`CREATE TABLE IF NOT EXISTS booking (
-	room_id SMALLINT REFERENCES room(id),
-	customer_id TEXT REFERENCES customer(ssn),
+	room_id SMALLINT REFERENCES room(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	customer_id TEXT REFERENCES customer(ssn) ON UPDATE CASCADE ON DELETE CASCADE,
 	start_date DATE,
 	end_date DATE,
 	checked_in BOOLEAN,
 	PRIMARY KEY (room_id, customer_id, start_date)
 )`);
 
-	// Used this to test chain fetching, you can toss into your chains.sql or wherever
-	await pool.query(`INSERT INTO CHAIN  (
-		name,
-		num_hotels,
-		hq_address,
-		email,
-		phone_num
-	)
-	VALUES
-	('Chain1', 123, '123 A St.', 'chain@A.com', '123-456-7890'),
-	('Chain2', 123, '123 B St.', 'chain@B.com', '123-456-7890'),
-	('Chain3', 123, '123 C St.', 'chain@C.com', '123-456-7890'),
-	('Chain4', 123, '123 D St.', 'chain@D.com', '123-456-7890'),
-	('Chain5', 123, '123 E St.', 'chain@E.com', '123-456-7890')`);
 })();
 
 const app = express();
