@@ -96,6 +96,32 @@ router.post("/create", async (req, res) => {
 	res.json(rows[0]);
 });
 
+router.post("/login_user", async (req, res) => {
+	const { rows } = await pool.query<User>(
+		"SELECT * FROM customer WHERE username = $1 AND password = $2",
+		[req.query.username, req.query.password]
+	);
+	if (rows.length === 0) {
+		res.json({ error: "Invalid username or password" });
+		return;
+	}
+
+	res.json(rows[0]);
+});
+
+router.post("/login_employee", async (req, res) => {
+	const { rows } = await pool.query<User>(
+		"SELECT * FROM customer WHERE username = $1 AND password = $2",
+		[req.query.username, req.query.password]
+	);
+	if (rows.length === 0) {
+		res.json({ error: "Invalid username or password" });
+		return;
+	}
+
+	res.json(rows[0]);
+});
+
 router.get("/average", async (req, res) => {
 	const average = await pool.query(
 		"SELECT AVG(price) FROM room WHERE hotel = $1",
@@ -106,10 +132,23 @@ router.get("/average", async (req, res) => {
 
 router.get("/sale", async (req, res) => {
 	const average = await pool.query(
-		"SELECT * FROM room WHERE price < (SELECT AVG(price) FROM room)",
-		[req.query.id]
+		"SELECT * FROM room WHERE price < (SELECT AVG(price) FROM room)"
 	);
 	res.json(average.rows);
+});
+
+router.get("/rooms", async (req, res) => {
+	const rooms = await pool.query("SELECT * FROM room WHERE hotel = $1", [
+		req.query.id,
+	]);
+	res.json(rooms.rows);
+});
+
+router.get("/city", async (req, res) => {
+	const hotels = await pool.query("SELECT * FROM hotel WHERE city = $1", [
+		req.query.city,
+	]);
+	res.json(hotels.rows);
 });
 
 export { router };
