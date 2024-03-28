@@ -12,6 +12,12 @@ router.get("/", async (req, res) => {
   res.json(hotels.rows);
 });
 
+router.get("/test", async (req, res) => {
+	const hotels = await pool.query<Hotel>('SELECT * FROM available_rooms_per_city');
+	res.json(hotels.rows);
+  }
+  );
+
 //Display chains
 router.get("/chains", async (req, res) => {
   const c = await pool.query<Chain>("SELECT * FROM CHAIN");
@@ -80,6 +86,8 @@ router.post("/booking", async (req, res) => {
 
   res.json(rows[0]);
 });
+
+
 
 // create customer
 // need to add employee
