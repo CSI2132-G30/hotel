@@ -67,7 +67,7 @@ import { pool } from "./database";
 )`);
 
 	// Used this to test chain fetching, you can toss into your chains.sql or wherever
-	await pool.query(`INSERT INTO CHAIN  (
+	/*await pool.query(`INSERT INTO CHAIN  (
 		name,
 		num_hotels,
 		hq_address,
@@ -79,8 +79,8 @@ import { pool } from "./database";
 	('Chain2', 123, '123 B St.', 'chain@B.com', '123-456-7890'),
 	('Chain3', 123, '123 C St.', 'chain@C.com', '123-456-7890'),
 	('Chain4', 123, '123 D St.', 'chain@D.com', '123-456-7890'),
-	('Chain5', 123, '123 E St.', 'chain@E.com', '123-456-7890')`);
-})();
+	('Chain5', 123, '123 E St.', 'chain@E.com', '123-456-7890')`);*/
+})(); 
 
 const app = express();
 

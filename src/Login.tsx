@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { onChange } from "../utils/event";
+import axios from "axios";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [handledLogin, setHandledLogin] = useState(false);
@@ -18,23 +19,22 @@ export default function Login() {
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const response = await fetch("http://localhost:3000/hotels/login", {
-      // make a route for this
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email, // change parameters to fit schema
-        password,
-        admin,
-      }),
-    });
-    const data = await response.json();
+    let response;
+    if (admin) {
+      response = await axios.post(
+        `http://localhost:4040/hotels/login_employee?username=${username}&password=${password}`
+      );
+    } else {
+      response = await axios.post(
+        `http://localhost:4040/hotels/login_user?username=${username}&password=${password}`
+      );
+    }
+    const data = await response.data;
     if (data.error) {
       setError(data.error);
     } else {
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("token", JSON.stringify(data));
+      localStorage.setItem("admin", admin.toString());
       setHandledLogin(true);
     }
   }
@@ -62,9 +62,9 @@ export default function Login() {
                 type="text"
                 name="username"
                 className="input w-full bg-white"
-                value={email}
+                value={username}
                 required
-                onChange={onChange(setEmail)}
+                onChange={onChange(setusername)}
               />
             </div>
             <div className="w-full pt-6 pl-6">
