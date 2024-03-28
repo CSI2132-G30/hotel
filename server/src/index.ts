@@ -35,18 +35,18 @@ import { pool } from "./database";
   await pool.query(`CREATE TABLE IF NOT EXISTS hotel (
 	id SERIAL PRIMARY KEY,
 	name TEXT,
-	CHAIN SMALLINT REFERENCES CHAIN(id),
-	stars SMALLINT,
+	CHAIN SMALLINT REFERENCES CHAIN(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	stars DOUBLE,
 	city TEXT,
 	num_rooms SMALLINT,
 	address TEXT,
-	manager TEXT REFERENCES employee(ssn)
+	manager TEXT REFERENCES employee(ssn) ON UPDATE CASCADE ON DELETE CASCADE
 )`);
 
   // This creates the room table
   await pool.query(`CREATE TABLE IF NOT EXISTS room (
 	id SERIAL PRIMARY KEY,
-	hotel SMALLINT REFERENCES hotel(id),
+	hotel SMALLINT REFERENCES hotel(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	number INTEGER,
 	price FLOAT,
 	capacity INTEGER,
@@ -56,10 +56,10 @@ import { pool } from "./database";
 	damage BOOLEAN
 )`);
 
-  // This creates the booking table
-  await pool.query(`CREATE TABLE IF NOT EXISTS booking (
-	room_id SMALLINT REFERENCES room(id),
-	customer_id TEXT REFERENCES customer(ssn),
+	// This creates the booking table
+	await pool.query(`CREATE TABLE IF NOT EXISTS booking (
+	room_id SMALLINT REFERENCES room(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	customer_id TEXT REFERENCES customer(ssn) ON UPDATE CASCADE ON DELETE CASCADE,
 	start_date DATE,
 	end_date DATE,
 	checked_in BOOLEAN,
@@ -106,4 +106,3 @@ app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use("/hotels", router);
 app.listen(4040, () => console.log("app listening on port 4040"));
-
