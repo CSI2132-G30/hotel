@@ -1,6 +1,6 @@
 import express from "express";
 import { pool } from "../database";
-import authenticate from "../middleware/auth_employee";
+import { authenticate_customer, authenticate_employee} from "../middleware/auth";
 
 const router = express.Router();
 
@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
 	res.json(hotels.rows);
 });
 
-router.get("/test", authenticate, async (req, res) => {
+router.get("/test", authenticate_employee, async (req, res) => {
 	const hotels = await pool.query<Hotel>('SELECT * FROM available_rooms_per_city');
 	res.json(hotels.rows);
 	console.log(res.locals.user);
