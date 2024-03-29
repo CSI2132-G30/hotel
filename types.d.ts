@@ -6,6 +6,7 @@ declare global {
 		name: string;
 		chain: string;
 		stars: number;
+		city: string;
 		num_rooms: number;
 		address: string;
 		manager: number;
@@ -38,5 +39,17 @@ declare global {
 		name: string;
 		username: string;
 		password: string;
+	};
+
+	type Room = {
+		id: number;
+		hotel: number;
+		number: number;
+		price: number;
+		capacity: number;
+		view: string;
+		amenities: string[];
+		extendible: boolean;
+		damage: boolean;
 	};
 }
