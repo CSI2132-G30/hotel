@@ -84,31 +84,7 @@ router.post("/booking", async (req, res) => {
 	res.json(rows[0]);
 });
 
-router.post("/login_user", async (req, res) => {
-	const { rows } = await pool.query<User>(
-		"SELECT * FROM customer WHERE username = $1 AND password = $2",
-		[req.query.username, req.query.password]
-	);
-	if (rows.length === 0) {
-		res.json({ error: "Invalid username or password" });
-		return;
-	}
 
-	res.json(rows[0]);
-});
-
-router.post("/login_employee", async (req, res) => {
-	const { rows } = await pool.query<User>(
-		"SELECT * FROM customer WHERE username = $1 AND password = $2",
-		[req.query.username, req.query.password]
-	);
-	if (rows.length === 0) {
-		res.json({ error: "Invalid username or password" });
-		return;
-	}
-
-	res.json(rows[0]);
-});
 
 router.get("/average", async (req, res) => {
 	const average = await pool.query(

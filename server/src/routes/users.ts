@@ -110,5 +110,30 @@ userRouter.patch("/employees/:ssn", async (req, res) => {
 	);
 	res.json(employee.rows[0]);
 });
+userRouter.post("/customers/login", async (req, res) => {
+	const { rows } = await pool.query<User>(
+		"SELECT * FROM customer WHERE username = $1 AND password = $2",
+		[req.query.username, req.query.password]
+	);
+	if (rows.length === 0) {
+		res.json({ error: "Invalid username or password" });
+		return;
+	}
+
+	res.json(rows[0]);
+});
+
+userRouter.post("/employees/login", async (req, res) => {
+	const { rows } = await pool.query<User>(
+		"SELECT * FROM employee WHERE username = $1 AND password = $2",
+		[req.query.username, req.query.password]
+	);
+	if (rows.length === 0) {
+		res.json({ error: "Invalid username or password" });
+		return;
+	}
+
+	res.json(rows[0]);
+});
 
 export { userRouter };
