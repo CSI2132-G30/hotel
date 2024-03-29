@@ -84,19 +84,33 @@ import { userRouter } from "./routes/users";
 	GROUP BY hotel.id
 `);
 
-	// function for the trigger
+	// function for hotel count the trigger
 	await pool.query (`CREATE OR REPLACE FUNCTION update_hotel_count() RETURNS TRIGGER AS $$
 	BEGIN	
-	UPDATE chain SET num_hotels = chain.num_hotels+1 WHERE chain.id = NEW.id;
+	UPDATE chain SET num_hotels = chain.num_hotels+1 WHERE chain.id = NEW.chain;
 	RETURN NEW;
 	END;
 	$$ LANGUAGE plpgsql;`);
 	
-	//SQL trigger
+	//hotel count trigger
 	await pool.query (`CREATE OR REPLACE TRIGGER hotel_count
     AFTER INSERT ON HOTEL
     FOR EACH ROW
     EXECUTE FUNCTION update_hotel_count();`);
+
+	// function for the room count trigger
+	await pool.query (`CREATE OR REPLACE FUNCTION update_room_count() RETURNS TRIGGER AS $$
+	BEGIN	
+	UPDATE hotel SET num_rooms = hotel.num_rooms+1 WHERE hotel.id = NEW.hotel;
+	RETURN NEW;
+	END;
+	$$ LANGUAGE plpgsql;`);
+	
+	//room count trigger
+	await pool.query (`CREATE OR REPLACE TRIGGER room_count
+    AFTER INSERT ON ROOM
+    FOR EACH ROW
+    EXECUTE FUNCTION update_room_count();`);
 
 })();
 
