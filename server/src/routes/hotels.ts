@@ -1,6 +1,6 @@
 import express from "express";
 import { pool } from "../database";
-import { authenticate_customer, authenticate_employee} from "../middleware/auth";
+import { authenticate_employee } from "../middleware/auth";
 
 const router = express.Router();
 
@@ -14,22 +14,17 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/test", authenticate_employee, async (req, res) => {
-	const hotels = await pool.query<Hotel>('SELECT * FROM available_rooms_per_city');
+	const hotels = await pool.query<Hotel>(
+		"SELECT * FROM available_rooms_per_city"
+	);
 	res.json(hotels.rows);
 	console.log(res.locals.user);
-  }
-  );
+});
 
 //Display chains
 router.get("/chains", async (req, res) => {
 	const c = await pool.query<Chain>("SELECT * FROM CHAIN");
 	res.json(c.rows);
-});
-
-// get hotel by id
-router.get("/customers", async (req, res) => {
-	const hotels = await pool.query<Hotel>("SELECT * FROM customer");
-	res.json(hotels.rows);
 });
 
 // get hotel by id
@@ -84,23 +79,6 @@ router.post("/booking", async (req, res) => {
 			req.query.end_date,
 			req.query.checked_in,
 		]
-	);
-
-	res.json(rows[0]);
-});
-
-
-
-// create customer
-// need to add employee
-router.post("/create", async (req, res) => {
-	const { rows } = await pool.query<User>(
-		`INSERT INTO customer (ssn, name, username, password)
-			VALUES
-			($1, $2, $3, $4)
-			RETURNING *
-	`,
-		[req.query.ssn, req.query.name, req.query.username, req.query.password]
 	);
 
 	res.json(rows[0]);
