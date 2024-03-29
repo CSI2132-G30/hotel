@@ -37,7 +37,7 @@ import { userRouter } from "./routes/users";
 	id SERIAL PRIMARY KEY,
 	name TEXT,
 	CHAIN SMALLINT REFERENCES CHAIN(id) ON UPDATE CASCADE ON DELETE CASCADE,
-	stars DOUBLE,
+	stars DOUBLE PRECISION NOT NULL,
 	city TEXT,
 	num_rooms SMALLINT,
 	address TEXT,
@@ -83,20 +83,21 @@ import { userRouter } from "./routes/users";
 	JOIN room ON hotel.id = room.hotel
 	GROUP BY hotel.id
 `);
-	// Used this to test chain fetching, you can toss into your chains.sql or wherever
-	await pool.query(`INSERT INTO CHAIN  (
-		name,
-		num_hotels,
-		hq_address,
-		email,
-		phone_num
-	)
-	VALUES
-	('Chain1', 123, '123 A St.', 'chain@A.com', '123-456-7890'),
-	('Chain2', 123, '123 B St.', 'chain@B.com', '123-456-7890'),
-	('Chain3', 123, '123 C St.', 'chain@C.com', '123-456-7890'),
-	('Chain4', 123, '123 D St.', 'chain@D.com', '123-456-7890'),
-	('Chain5', 123, '123 E St.', 'chain@E.com', '123-456-7890')`);
+
+	// function for the trigger
+	await pool.query (`CREATE OR REPLACE FUNCTION update_hotel_count() RETURNS TRIGGER AS $$
+	BEGIN	
+	UPDATE chain SET num_hotels = chain.num_hotels+1 WHERE chain.id = NEW.id;
+	RETURN NEW;
+	END;
+	$$ LANGUAGE plpgsql;`);
+	
+	//SQL trigger
+	await pool.query (`CREATE OR REPLACE TRIGGER hotel_count
+    AFTER INSERT ON HOTEL
+    FOR EACH ROW
+    EXECUTE FUNCTION update_hotel_count();`);
+
 })();
 
 const app = express();

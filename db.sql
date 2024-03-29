@@ -7,11 +7,11 @@ INSERT INTO CHAIN  (
 		phone_num
 	)
 	VALUES
-	(1, 'Groupe Luxe', 123, '123 A St.', 'aide@groupeluxe.com', '514-000-0000'),
-	(2, 'Princeton and Key Inc', 123, '123 B St.', 'info@princetonandkey.com', '416-000-0000'),
-	(3, 'Locklear Hotels Group', 123, '123 C St.', 'help@locklear.ca', '647-000-000'),
-	(4, 'Les Maisons Belles', 123, '123 D St.', 'info@lmb.ca', '438-000-0000'),
-	(5, 'Cozy Inns Inc.', 123, '123 E St.', 'info@cozy.ca', '613-000-0000');
+	(1, 'Groupe Luxe', 0, '123 A St.', 'aide@groupeluxe.com', '514-000-0000'),
+	(2, 'Princeton and Key Inc', 0, '123 B St.', 'info@princetonandkey.com', '416-000-0000'),
+	(3, 'Locklear Hotels Group', 0, '123 C St.', 'help@locklear.ca', '647-000-000'),
+	(4, 'Les Maisons Belles', 0, '123 D St.', 'info@lmb.ca', '438-000-0000'),
+	(5, 'Cozy Inns Inc.', 0, '123 E St.', 'info@cozy.ca', '613-000-0000');
 
 INSERT INTO employee (
 	ssn,
@@ -34,7 +34,7 @@ INSERT INTO employee (
 	('000 000 006', 'Muthuvel, Mahalakshmi', 'mmaha920', 'password'),
 	('000 000 032', 'Sahi Ishveen Manjeet', 'sishv063', 'password');
 
-INSERT INTO HOTEL (
+INSERT INTO hotel (
 		name,
 		CHAIN,
 		stars,
