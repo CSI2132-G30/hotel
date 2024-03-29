@@ -21,6 +21,7 @@ export default function Login() {
 		event.preventDefault();
 		let response;
 		if (admin) {
+			console.log(error);
 			response = await axios.post(
 				`http://localhost:4040/users/employees/login?username=${username}&password=${password}`
 			);
