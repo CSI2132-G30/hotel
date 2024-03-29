@@ -17,7 +17,7 @@ router.get("/chains", async (req, res) => {
 
 // get all hotels from given chain
 router.get("/chains/:id", async (req, res) => {
-	const c = await pool.query<Chain>("SELECT * FROM hotel WHERE CHAIN = $1", [
+	const c = await pool.query<Hotel>("SELECT * FROM hotel WHERE CHAIN = $1", [
 		req.params.id,
 	]);
 	res.json(c.rows);
