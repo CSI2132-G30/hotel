@@ -61,11 +61,34 @@ import { userRouter } from "./routes/users";
 	await pool.query(`CREATE TABLE IF NOT EXISTS booking (
 	room_id SMALLINT REFERENCES room(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	customer_id TEXT REFERENCES customer(ssn) ON UPDATE CASCADE ON DELETE CASCADE,
-	start_date DATE,
-	end_date DATE,
+	start_date DATE NOT NULL,
+	end_date DATE NOT NULL,
 	checked_in BOOLEAN,
 	PRIMARY KEY (room_id, customer_id, start_date)
 )`);
+
+	await pool.query(`CREATE INDEX IF NOT EXISTS hotel_city ON hotel(city)`);
+
+	await pool.query(
+		`CREATE INDEX IF NOT EXISTS employee_username ON employee(username)`
+	);
+	await pool.query(
+		`CREATE INDEX IF NOT EXISTS employee_password ON employee(password)`
+	);
+	await pool.query(
+		`CREATE INDEX IF NOT EXISTS customer_username ON customer(username)`
+	);
+	await pool.query(
+		`CREATE INDEX IF NOT EXISTS customer_password ON customer(password)`
+	);
+
+	await pool.query(
+		`CREATE INDEX IF NOT EXISTS booking_start ON booking(start_date DESC)`
+	);
+
+	await pool.query(
+		`CREATE INDEX IF NOT EXISTS booking_end ON booking(end_date DESC)`
+	);
 
 	await pool.query(`
 	CREATE OR REPLACE VIEW available_rooms_per_city AS
@@ -85,33 +108,32 @@ import { userRouter } from "./routes/users";
 `);
 
 	// function for hotel count the trigger
-	await pool.query (`CREATE OR REPLACE FUNCTION update_hotel_count() RETURNS TRIGGER AS $$
+	await pool.query(`CREATE OR REPLACE FUNCTION update_hotel_count() RETURNS TRIGGER AS $$
 	BEGIN	
 	UPDATE chain SET num_hotels = chain.num_hotels+1 WHERE chain.id = NEW.chain;
 	RETURN NEW;
 	END;
 	$$ LANGUAGE plpgsql;`);
-	
+
 	//hotel count trigger
-	await pool.query (`CREATE OR REPLACE TRIGGER hotel_count
+	await pool.query(`CREATE OR REPLACE TRIGGER hotel_count
     AFTER INSERT ON HOTEL
     FOR EACH ROW
     EXECUTE FUNCTION update_hotel_count();`);
 
 	// function for the room count trigger
-	await pool.query (`CREATE OR REPLACE FUNCTION update_room_count() RETURNS TRIGGER AS $$
+	await pool.query(`CREATE OR REPLACE FUNCTION update_room_count() RETURNS TRIGGER AS $$
 	BEGIN	
 	UPDATE hotel SET num_rooms = hotel.num_rooms+1 WHERE hotel.id = NEW.hotel;
 	RETURN NEW;
 	END;
 	$$ LANGUAGE plpgsql;`);
-	
+
 	//room count trigger
-	await pool.query (`CREATE OR REPLACE TRIGGER room_count
+	await pool.query(`CREATE OR REPLACE TRIGGER room_count
     AFTER INSERT ON ROOM
     FOR EACH ROW
     EXECUTE FUNCTION update_room_count();`);
-
 })();
 
 const app = express();
