@@ -6,8 +6,10 @@ import Account from "./Account.tsx";
 import Bookings from "./Bookings.tsx";
 import Register from "./Register.tsx";
 import Login from "./Login.tsx";
+import ManageHotels from "./ManageHotels.tsx";
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ManageUsers from "./ManageUsers.tsx";
 
 /*Displays the App component*/
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -21,6 +23,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 				<Route path='/register' Component={Register} />
 				<Route path='/bookings' Component={Bookings} />
         <Route path='/login' Component={Login} />
+        <Route path='/managehotels' Component={ManageHotels} />
+        <Route path='/manageusers' Component={ManageUsers} />
 			</Routes>
 		</Router>
 	</React.StrictMode>

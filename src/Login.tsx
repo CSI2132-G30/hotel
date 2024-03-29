@@ -22,11 +22,11 @@ export default function Login() {
     let response;
     if (admin) {
       response = await axios.post(
-        `http://localhost:4040/hotels/login_employee?username=${username}&password=${password}`
+        `http://localhost:4040/users/employees/login?username=${username}&password=${password}`
       );
     } else {
       response = await axios.post(
-        `http://localhost:4040/hotels/login_user?username=${username}&password=${password}`
+        `http://localhost:4040/users/customers/login?username=${username}&password=${password}`
       );
     }
     const data = await response.data;
