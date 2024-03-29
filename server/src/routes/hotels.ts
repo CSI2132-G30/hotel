@@ -15,6 +15,14 @@ router.get("/chains", async (req, res) => {
 	res.json(c.rows);
 });
 
+// get all hotels from given chain
+router.get("/chains/:id", async (req, res) => {
+	const c = await pool.query<Chain>("SELECT * FROM hotel WHERE CHAIN = $1", [
+		req.params.id,
+	]);
+	res.json(c.rows);
+});
+
 // post hotel
 router.post("/", async (req, res) => {
 	const { rows } = await pool.query<Hotel>(
@@ -23,7 +31,7 @@ router.post("/", async (req, res) => {
 		chain,
 		stars,
 		city,
-		numRooms,
+		num_rooms,
 		address,
 		manager
 	)
@@ -115,7 +123,7 @@ router.get("/average", async (req, res) => {
 		"SELECT AVG(price) FROM room WHERE hotel = $1",
 		[req.query.id]
 	);
-	res.json(average.rows);
+	res.json(average.rows[0]);
 });
 
 router.get("/sale", async (req, res) => {
@@ -177,9 +185,9 @@ router.delete("/rooms/:id", async (req, res) => {
 	res.json(rooms.rows[0]);
 });
 
-router.get("/city", async (req, res) => {
+router.get("/city/:city", async (req, res) => {
 	const hotels = await pool.query("SELECT * FROM hotel WHERE city = $1", [
-		req.query.city,
+		req.params.city,
 	]);
 	res.json(hotels.rows);
 });
@@ -189,7 +197,7 @@ router.get("/:id", async (req, res) => {
 	const hotels = await pool.query<Hotel>("SELECT * FROM hotel WHERE id = $1", [
 		req.params.id,
 	]);
-	res.json(hotels.rows);
+	res.json(hotels.rows[0]);
 });
 
 // delete hotel by id
