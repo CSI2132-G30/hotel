@@ -116,7 +116,7 @@ userRouter.patch("/customers/:ssn", async (req, res) => {
       WHERE ssn = $4
       RETURNING *
       `,
-		[req.body.name, req.body.username, req.body.password, req.params.ssn]
+		[req.query.name, req.query.username, req.query.password, req.params.ssn]
 	);
 	res.json(customer.rows);
 });
@@ -132,7 +132,7 @@ userRouter.patch("/employees/:ssn", async (req, res) => {
       WHERE ssn = $4
       RETURNING *
       `,
-		[req.body.name, req.body.username, req.body.password, req.params.ssn]
+		[req.query.name, req.query.username, req.query.password, req.params.ssn]
 	);
 	res.json(employee.rows[0]);
 });
