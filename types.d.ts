@@ -53,6 +53,19 @@ declare global {
 		damage: boolean;
 	};
 
+	type Info = {
+		start_date: Date;
+		end_date: Date;
+		id: number;
+		name: string;
+		stars: number;
+		city: string;
+		num_rooms: number;
+		room_id: number;
+		address: string;
+		manager: number;
+	};
+
 	type City = {
 		city: string;
 	};
