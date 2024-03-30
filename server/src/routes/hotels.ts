@@ -225,7 +225,6 @@ router.get("/search", async (req, res) => {
 		)`,
 			[req.query.hotel, req.query.end_date, req.query.start_date]
 		);
-		console.log(hotels.rows);
 		res.json(hotels.rows);
 	} catch (error) {
 		console.log(error);
