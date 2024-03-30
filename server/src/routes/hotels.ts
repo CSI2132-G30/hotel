@@ -53,7 +53,32 @@ router.post("/", async (req, res) => {
 	res.json(rows[0]);
 });
 
-// delete booking
+// start_date: Date;
+// 	end_date: Date;
+// 	id: number;
+// 	name: string;
+// 	chain: string;
+// 	stars: number;
+// 	city: string;
+// 	num_rooms: number;
+// 	address: string;
+// 	manager: number;
+
+// get booking
+router.get("/booking/:customer_id/", async (req, res) => {
+	const { rows } = await pool.query<Booking>(
+		`SELECT b.start_date, r.id AS room_id, b.end_date, h.id AS hotel_id, h.name AS name, h.stars AS stars, h.city AS city, h.num_rooms AS num_rooms, h.address AS address, h.manager AS manager
+		FROM booking b
+		INNER JOIN room r ON b.room_id = r.id
+		INNER JOIN hotel h ON r.hotel = h.id
+		WHERE b.customer_id = $1`,
+		[req.params.customer_id]
+	);
+
+	res.json(rows);
+});
+
+// get booking
 router.get("/booking/:room_id/:customer_id/:start_date", async (req, res) => {
 	const { rows } = await pool.query<Booking>(
 		`SELECT * FROM booking WHERE
@@ -227,7 +252,7 @@ router.get("/search", async (req, res) => {
 		);
 		res.json(hotels.rows);
 	} catch (error) {
-		console.log(error);
+		res.json([]);
 	}
 });
 

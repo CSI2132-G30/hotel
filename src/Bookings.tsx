@@ -34,7 +34,7 @@ export default function Bookings() {
 		<>
 			<div className='flex-column text-center justify-center items-center align-middle'>
 				<h1 className='text-center text-6xl py-8'>Book Now</h1>
-				<div className='flex items-center justify-center'>
+				<div className='flex items-center justify-center align-middle'>
 					<div className='flex flex-row gap-4'>
 						<select
 							className='select select-bordered w-full max-w-xs'
@@ -73,13 +73,15 @@ export default function Bookings() {
 						</button>
 					</div>
 				</div>
-				<div className='w-1/2 flex flex-col gap-2'>
+				<div className="w-full flex justify-center pt-6">
+				<div className='w-1/2 flex flex-col gap-2 align-middle justify-center items-center'>
 					{hotels.map((c) => (
 						<HotelCard
 							h={c}
 							startDate={startDate}
 							endDate={endDate}></HotelCard>
 					))}
+				</div>
 				</div>
 			</div>
 		</>

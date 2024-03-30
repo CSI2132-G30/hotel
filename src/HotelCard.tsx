@@ -13,6 +13,9 @@ const HotelCard: React.FC<HotelCardProps> = ({ h, startDate, endDate }) => {
 
 	async function getRooms() {
 		try {
+			console.log(
+				`http://localhost:4040/hotels/search?hotel=${h.id}&end_date=${endDate}&start_date=${startDate}`
+			);
 			const res = await axios.get(
 				`http://localhost:4040/hotels/search?hotel=${h.id}&end_date=${endDate}&start_date=${startDate}`
 			);
@@ -33,7 +36,7 @@ const HotelCard: React.FC<HotelCardProps> = ({ h, startDate, endDate }) => {
 				</div>
 				<div className='collapse-content flex flex-col justify-center items-center gap-2'>
 					{rooms.map((r) => (
-						<RoomCard r={r}></RoomCard>
+						<RoomCard r={r} startDate={startDate} endDate={endDate}></RoomCard>
 					))}
 				</div>
 			</div>

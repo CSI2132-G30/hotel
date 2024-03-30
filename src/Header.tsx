@@ -1,6 +1,20 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function Header() {
+	const [login, setHandledLogin] = useState(false);
+	useEffect(() => {
+		if (localStorage.getItem("token")) {
+			setHandledLogin(true);
+		}
+	}, []);
+
+	function handleLogoutClick() {
+		localStorage.clear();
+		location.reload();
+	}
+
+
 	return (
 		<div className='navbar bg-base-100'>
 			<div className='flex-1'>
@@ -14,9 +28,10 @@ export default function Header() {
 						</Link>
 					</li>
 					<li>
-						<Link className='nav-link font-weight-bold' to={"/register"}>
-							Register
-						</Link>
+					{login
+        ? <a onClick={handleLogoutClick} href="/">Logout</a>
+        : <a href="/login">Login</a>
+      }
 					</li>
 					<li>
 						<Link className='nav-link font-weight-bold' to={"/account"}>
@@ -27,7 +42,8 @@ export default function Header() {
 						<Link className='nav-link font-weight-bold' to={"/bookings"}>
 							Book Now
 						</Link>
-					</li>
+						</li>
+					
 				</ul>
 			</div>
 		</div>

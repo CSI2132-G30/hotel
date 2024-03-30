@@ -42,7 +42,7 @@ declare global {
 	};
 
 	type Room = {
-		id: number;
+		room_id: number;
 		hotel: number;
 		number: number;
 		price: number;
@@ -51,6 +51,19 @@ declare global {
 		amenities: string[];
 		extendible: boolean;
 		damage: boolean;
+	};
+
+	type Info = {
+		start_date: Date;
+		end_date: Date;
+		id: number;
+		name: string;
+		stars: number;
+		city: string;
+		num_rooms: number;
+		room_id: number;
+		address: string;
+		manager: number;
 	};
 
 	type City = {
