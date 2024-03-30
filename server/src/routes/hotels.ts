@@ -185,6 +185,12 @@ router.delete("/rooms/:id", async (req, res) => {
 	res.json(rooms.rows[0]);
 });
 
+// list all distinct cities
+router.get("/city", async (req, res) => {
+	const hotels = await pool.query("SELECT DISTINCT city FROM hotel;");
+	res.json(hotels.rows);
+});
+
 router.get("/city/:city", async (req, res) => {
 	const hotels = await pool.query("SELECT * FROM hotel WHERE city = $1", [
 		req.params.city,
