@@ -51,6 +51,10 @@ userRouter.post("/customers/create", async (req, res) => {
 	`,
 		[req.query.ssn, req.query.name, req.query.username, req.query.password]
 	);
+	if (rows.length === 0) {
+		res.json({ error: "User already exists" });
+		return;
+	}
 
 	res.json(rows[0]);
 });

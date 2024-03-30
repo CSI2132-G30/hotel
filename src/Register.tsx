@@ -1,11 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 export default function Register() {
   const [ssn, setSSN] = useState("");
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+	const [handledLogin, setHandledLogin] = useState(false);
 
   async function createUser(
     ssn: string,
@@ -14,13 +17,33 @@ export default function Register() {
     password: string
   ) {
     await axios.post(
-      `http://localhost:4040/hotels/create?ssn=${ssn}&name=${name}&username=${username}&password=${password}`
+      `http://localhost:4040/users/customers/create?ssn=${ssn}&name=${name}&username=${username}&password=${password}`
     );
+    let response;
+		
+			response = await axios.post(
+				`http://localhost:4040/users/customers/login?username=${username}&password=${password}`
+			);
+		
+		const data = await response.data;
+		if (data.error) {
+			setError(data.error);
+      return error
+		} else {
+			localStorage.setItem("token", JSON.stringify(data));
+			localStorage.setItem("admin", "false");
+			setHandledLogin(true);
+		}
+	}
+
+	if (handledLogin) {
+		return <Navigate to='/bookings' />;
+	}
 
     //localStorage.setItem("token", {});
     //localStorage.setItem("admin", "false");
     
-  }
+  
 
   return (
     <>
