@@ -53,6 +53,19 @@ router.post("/", async (req, res) => {
 	res.json(rows[0]);
 });
 
+// delete booking
+router.get("/booking/:room_id/:customer_id/:start_date", async (req, res) => {
+	const { rows } = await pool.query<Booking>(
+		`SELECT * FROM booking WHERE
+		room_id = $1 AND
+		customer_id = $2 AND
+		start_date = $3`,
+		[req.params.room_id, req.params.customer_id, req.params.start_date]
+	);
+
+	res.json(rows[0]);
+});
+
 // post booking
 router.post("/booking", async (req, res) => {
 	const { rows } = await pool.query<Booking>(
@@ -135,7 +148,7 @@ router.get("/sale", async (req, res) => {
 
 router.get("/rooms", async (req, res) => {
 	const rooms = await pool.query<Room>("SELECT * FROM room WHERE hotel = $1", [
-		req.query.id,
+		req.query.hotel,
 	]);
 	res.json(rooms.rows);
 });
@@ -194,6 +207,13 @@ router.get("/city", async (req, res) => {
 router.get("/city/:city", async (req, res) => {
 	const hotels = await pool.query("SELECT * FROM hotel WHERE city = $1", [
 		req.params.city,
+	]);
+	res.json(hotels.rows);
+});
+
+router.get("/search", async (req, res) => {
+	const hotels = await pool.query("SELECT * FROM hotel WHERE city = $1", [
+		req.query.city,
 	]);
 	res.json(hotels.rows);
 });
