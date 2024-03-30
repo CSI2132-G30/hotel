@@ -353,20 +353,18 @@ INSERT INTO room (
 
 INSERT INTO customer (
 	ssn, name, username, password
-) VALUES (
-	'111 111 111', 'Robert Laganiere', 'rlaga063', 'password',
-	'222 222 222', 'Lucia Moura', 'lmour008', 'password',
-	'333 333 333', 'Yongyi Mao', 'ymao037', 'password',
-	'444 444 444', 'Thomas Tran', 'ttran002', 'password'
-);
+) VALUES
+	('111 111 111', 'Robert Laganiere', 'rlaga063', 'password'),
+	('222 222 222', 'Lucia Moura', 'lmour008', 'password'),
+	('333 333 333', 'Yongyi Mao', 'ymao037', 'password'),
+	('444 444 444', 'Thomas Tran', 'ttran002', 'password');
 
 INSERT INTO booking (
 	room_id, customer_id, start_date, end_date, checked_in
-) VALUES (
-	15, '111 111 111', '2024-01-01','2024,01-20',TRUE
-	98, '222 222 222', '2024-01-01','2024,12-31',TRUE
-	145, '333 333 333', '2024-01-01','2024,04-30',TRUE
-	87, '444 444 444', '2024-03-23','2024,08-23',TRUE
-	15, '111 111 111', '2024-04-02','2024,04-11',FALSE
-	121, '111 111 111', '2024-04-17','2024,04-19',FALSE
-);
+) VALUES
+	(15, '111 111 111', '2024-01-01','2024,01-20',TRUE),
+	(98, '222 222 222', '2024-01-01','2024,12-31',TRUE),
+	(145, '333 333 333', '2024-01-01','2024,04-30',TRUE),
+	(87, '444 444 444', '2024-03-23','2024,08-23',TRUE),
+	(150, '111 111 111', '2024-04-02','2024,01-01',FALSE),
+	(121, '111 111 111', '2024-04-17','2024,04-19',FALSE);
