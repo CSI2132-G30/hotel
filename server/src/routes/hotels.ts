@@ -211,11 +211,25 @@ router.get("/city/:city", async (req, res) => {
 	res.json(hotels.rows);
 });
 
+// serach for rooms in a given hotel in a given time period
 router.get("/search", async (req, res) => {
-	const hotels = await pool.query("SELECT * FROM hotel WHERE city = $1", [
-		req.query.city,
-	]);
-	res.json(hotels.rows);
+	try {
+		const hotels = await pool.query(
+			`SELECT r.id AS room_id, r.number, r.price, r.capacity, r.view, r.amenities, r.extendible, r.damage
+		FROM room r
+		WHERE r.hotel = $1
+		AND r.id NOT IN (
+			SELECT DISTINCT b.room_id
+			FROM booking b
+			WHERE (b.start_date <= $2 AND b.end_date >= $3)
+		)`,
+			[req.query.hotel, req.query.end_date, req.query.start_date]
+		);
+		console.log(hotels.rows);
+		res.json(hotels.rows);
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 // get hotel by id
