@@ -14,8 +14,8 @@ export default function Header() {
 						</Link>
 					</li>
 					<li>
-						<Link className='nav-link font-weight-bold' to={"/register"}>
-							Register
+						<Link className='nav-link font-weight-bold' to={"/login"}>
+							Login
 						</Link>
 					</li>
 					<li>

@@ -47,14 +47,14 @@ export default function Login() {
 	return (
 		<>
 			<div className='w-screen h-[calc(57rem-268px)] flex items-center justify-center'>
-				<div className='bg-slate-100 w-96 h-96 rounded-md border-2'>
+				<div className='bg-slate-100 w-96 h-3/4 rounded-md border-2'>
 					<form
 						onSubmit={handleLogin}
 						className='h-20 w-fill flex items-center justify-top flex-col'>
 						<div className='pt-6'>
 							<span className='text-3xl text-black'> Login </span>
 						</div>
-						<div className='w-full pt4 pl-6'>
+						<div className='w-full pt-4 pl-6'>
 							<div className='justify-items-start'>Username</div>
 						</div>
 						<div className='w-full pl-6 pr-6'>
@@ -80,7 +80,7 @@ export default function Login() {
 								onChange={onChange(setPassword)}
 							/>
 						</div>
-						<div className='pt-6 pl-6 pr-6 w-full items-center flex justify-items-center justify-center flex-wrap'>
+						<div className='pt-6 pl-6 pr-6 w-full items-center flex flex-col justify-items-center justify-center flex-wrap'>
 							<button
 								type='submit'
 								name='register_user'
@@ -95,6 +95,10 @@ export default function Login() {
 								onClick={() => setAdmin(true)}>
 								Login as Employee
 							</button>
+							<div className="divider divider-neutral w-full h-2">OR</div> 
+							<a className="btn btn-s w-full rounded-3xl" href="/register">
+								Register an Account
+							</a>
 						</div>
 					</form>
 				</div>
