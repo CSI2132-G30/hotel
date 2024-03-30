@@ -128,12 +128,29 @@ import { userRouter } from "./routes/users";
 	RETURN NEW;
 	END;
 	$$ LANGUAGE plpgsql;`);
-
-	//room count trigger
-	await pool.query(`CREATE OR REPLACE TRIGGER room_count
+	
+	// room count trigger
+	await pool.query (`CREATE OR REPLACE TRIGGER room_count
     AFTER INSERT ON ROOM
     FOR EACH ROW
     EXECUTE FUNCTION update_room_count();`);
+
+	// function for the star verification trigger
+	await pool.query (`CREATE OR REPLACE FUNCTION verify_num_stars() RETURNS TRIGGER AS $$
+    BEGIN
+		IF NEW.stars > 5 OR NEW.stars < 0 THEN
+			RAISE EXCEPTION 'Stars must be between 0 and 5. % has %', NEW.name, NEW.stars;
+		END IF;
+		RETURN NEW;
+	END;
+    $$ LANGUAGE plpgsql;`);
+
+	// star verification trigger
+	await pool.query (`CREATE OR REPLACE TRIGGER verify_stars
+    BEFORE INSERT ON HOTEL
+    FOR EACH ROW
+    EXECUTE FUNCTION verify_num_stars();`);
+
 })();
 
 const app = express();
