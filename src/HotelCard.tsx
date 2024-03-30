@@ -33,7 +33,7 @@ const HotelCard: React.FC<HotelCardProps> = ({ h, startDate, endDate }) => {
 				</div>
 				<div className='collapse-content flex flex-col justify-center items-center gap-2'>
 					{rooms.map((r) => (
-						<RoomCard r={r}></RoomCard>
+						<RoomCard r={r} startDate={startDate} endDate={endDate}></RoomCard>
 					))}
 				</div>
 			</div>
