@@ -75,7 +75,10 @@ export default function Bookings() {
 				</div>
 				<div className='w-1/2 flex flex-col gap-2'>
 					{hotels.map((c) => (
-						<HotelCard h={c}></HotelCard>
+						<HotelCard
+							h={c}
+							startDate={startDate}
+							endDate={endDate}></HotelCard>
 					))}
 				</div>
 			</div>
