@@ -52,4 +52,8 @@ declare global {
 		extendible: boolean;
 		damage: boolean;
 	};
+
+	type City = {
+		city: string;
+	};
 }
