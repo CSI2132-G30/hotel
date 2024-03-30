@@ -87,7 +87,7 @@ INSERT INTO hotel (
 	('Cozy Inn Roxboro', 5, 2.9, 'Calgary', 0, '3 Belgrade Cres',  '000 000 048'),
 	('Cozy Inn Westmount', 5, 4.8, 'Montreal', 0, '3 rue du Jardin',  '000 000 001'),
 	('Cozy Inn Pearson Airport', 5, 4.7, 'Toronto', 0, '234 Kiping Ave',  '000 000 004'),
-	('Little Victoria Inn', 5, 5.5, 'Victoria', 0, '135 Mattamy St',  '000 000 041');
+	('Little Victoria Inn', 5, 4.3, 'Victoria', 0, '135 Mattamy St',  '000 000 041');
 
 INSERT INTO room (
 	hotel ,

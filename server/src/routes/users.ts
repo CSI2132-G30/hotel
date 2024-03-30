@@ -1,5 +1,6 @@
 import express from "express";
 import { pool } from "../database";
+import { authenticate_employee } from "../middleware/auth";
 
 const userRouter = express.Router();
 
