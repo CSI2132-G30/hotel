@@ -37,6 +37,7 @@ export default function Login() {
 			localStorage.setItem("token", JSON.stringify(data));
 			localStorage.setItem("admin", admin.toString());
 			setHandledLogin(true);
+			location.reload();
 		}
 	}
 
