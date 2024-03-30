@@ -252,7 +252,7 @@ router.get("/search", async (req, res) => {
 		);
 		res.json(hotels.rows);
 	} catch (error) {
-		console.log(error);
+		res.json([]);
 	}
 });
 

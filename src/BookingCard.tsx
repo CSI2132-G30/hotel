@@ -9,13 +9,13 @@ interface HotelCardProps {
 const BookingCard: React.FC<HotelCardProps> = ({ b }) => {
 	const [cancelled, setCancelled] = useState<boolean>(false);
 	async function deleteBooking() {
-		setCancelled(true);
 		try {
 			await axios.delete(
 				`http://localhost:4040/hotels/booking/${b.room_id}/${
 					JSON.parse(localStorage.getItem("token")!).ssn
 				}/${b.start_date}`
 			);
+			setCancelled(true);
 		} catch (error) {
 			console.error("Error fetching data:", error);
 		}
