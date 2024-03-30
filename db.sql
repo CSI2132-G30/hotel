@@ -87,7 +87,7 @@ INSERT INTO hotel (
 	('Cozy Inn Roxboro', 5, 2.9, 'Calgary', 0, '3 Belgrade Cres',  '000 000 048'),
 	('Cozy Inn Westmount', 5, 4.8, 'Montreal', 0, '3 rue du Jardin',  '000 000 001'),
 	('Cozy Inn Pearson Airport', 5, 4.7, 'Toronto', 0, '234 Kiping Ave',  '000 000 004'),
-	('Little Victoria Inn', 5, 5.5, 'Victoria', 0, '135 Mattamy St',  '000 000 041');
+	('Little Victoria Inn', 5, 5.0, 'Victoria', 0, '135 Mattamy St',  '000 000 041');
 
 INSERT INTO room (
 	hotel ,
@@ -366,5 +366,5 @@ INSERT INTO booking (
 	(98, '222 222 222', '2024-01-01','2024-12-31',TRUE),
 	(145, '333 333 333', '2024-01-01','2024-04-30',TRUE),
 	(87, '444 444 444', '2024-03-23','2024-08-23',TRUE),
-	(150, '111 111 111', '2024-04-02','2024-01-01',FALSE),
+	(150, '111 111 111', '2024-04-02','2024-05-01',FALSE),
 	(121, '111 111 111', '2024-04-17','2024-04-19',FALSE);
