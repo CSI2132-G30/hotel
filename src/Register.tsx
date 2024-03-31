@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 
@@ -9,6 +9,13 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 	const [handledLogin, setHandledLogin] = useState(false);
+
+  useEffect(() => {
+		if (localStorage.getItem("token")) {
+			setHandledLogin(true);
+		}
+	}, []);
+
 
   async function createUser(
     ssn: string,
@@ -33,6 +40,7 @@ export default function Register() {
 			localStorage.setItem("token", JSON.stringify(data));
 			localStorage.setItem("admin", "false");
 			setHandledLogin(true);
+      location.reload();
 		}
 	}
 
