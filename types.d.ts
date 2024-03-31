@@ -23,7 +23,7 @@ declare global {
 
 	type Booking = {
 		room_id: number;
-		customer_id: number;
+		customer_id: string;
 		start_date: Date;
 		end_date: Date;
 		checked_in: boolean;

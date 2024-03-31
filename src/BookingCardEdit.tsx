@@ -1,6 +1,6 @@
 import axios from "axios";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { onChange } from "../utils/event";
 
 interface BookingCardEditProps {
@@ -9,11 +9,24 @@ interface BookingCardEditProps {
 
 const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b }) => {
 	const [room_id, setRoom_id] = useState<number>(b.room_id);
-	const [customer_id, setCustomer_id] = useState<number>(b.customer_id);
+	const [customer_id, setCustomer_id] = useState<string>(b.customer_id);
 	const [start_date, setStart_date] = useState<Date>(b.start_date);
 	const [end_date, setEnd_date] = useState<Date>(b.end_date);
 	const [checked_in, setChecked_in] = useState<boolean>(b.checked_in);
 	const [cancelled, setCancelled] = useState<boolean>(false);
+    const [customers, setCustomers] = useState<User[]>([]);
+
+
+
+    async function getCustomers() {
+        try {
+            const res = await axios.get(`http://localhost:4040/users/customers`);
+            setCustomers(res.data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+
 
 	async function updateBooking() {
 		var form = document.getElementById("myForm");
@@ -43,6 +56,12 @@ const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b }) => {
 			console.error("Error fetching data:", error);
 		}
 	}
+
+    useEffect(() => {
+        getCustomers();
+    }
+    , []);
+
 	return (
 		<div>
 			<div
@@ -60,11 +79,15 @@ const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b }) => {
 							value={room_id}
 							onChange={onChange(setRoom_id)}></textarea>
 						<h2>CustomerID:</h2>
-						<textarea
-							className='textarea textarea-bordered'
-							placeholder={String(b.customer_id)}
+						<select
+							className='select select-bordered'
+							
 							value={customer_id}
-							onChange={onChange(setCustomer_id)}></textarea>
+							onChange={(v) => setCustomer_id(v.target.value)}>
+                            {customers.map((c) => (
+                                <option>{c.ssn}</option>
+                            ))}
+                            </select>
 						<h3>Start Date:</h3>
 						<input
 							className='textarea textarea-bordered'

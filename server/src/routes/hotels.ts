@@ -6,7 +6,7 @@ const router = express.Router();
 
 // get all hotels
 router.get("/", async (req, res) => {
-	const hotels = await pool.query<Hotel>("SELECT * FROM hotel");
+	const hotels = await pool.query<Hotel>("SELECT * FROM hotel ORDER BY id ASC");
 	res.json(hotels.rows);
 });
 
@@ -88,7 +88,9 @@ router.get("/bookings/:hotel_id", async (req, res) => {
 		FROM hotel h
 		INNER JOIN room r ON h.id = r.hotel
 		INNER JOIN booking b ON r.id = b.room_id
-		WHERE h.id = $1`,
+		WHERE h.id = $1
+		ORDER BY r.id ASC, b.start_date ASC`
+		,
 		[req.params.hotel_id]
 	);
 

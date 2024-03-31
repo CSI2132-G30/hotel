@@ -19,6 +19,6 @@ export default function ManageHotels() {
 	}, []);
 
 	return hotels.map((c) => (
-		<HotelCardBookingsEdit h={c}></HotelCardBookingsEdit>
+			<HotelCardBookingsEdit h={c}></HotelCardBookingsEdit>
 	));
 }

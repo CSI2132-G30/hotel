@@ -55,7 +55,7 @@ const HotelCardEdit: React.FC<HotelCardEditProps> = ({ h }) => {
 		getRooms();
 	}, []);
 	return (
-		<div className={deleted ? 'flex flex-row justify-center items-center w-full hidden' :'flex flex-row justify-center items-center w-full'}>
+		<div className={deleted ? 'flex flex-row justify-center items-center w-full hidden' :'flex flex-row justify-center items-center w-full '}>
 			<div className='collapse bg-base-200'>
 				<input type='checkbox' className='peer' />
 				<span className='collapse-title border border-base-300 bg-base-200 '>
