@@ -13,9 +13,6 @@ const HotelCard: React.FC<HotelCardProps> = ({ h, startDate, endDate }) => {
 
 	async function getRooms() {
 		try {
-			console.log(
-				`http://localhost:4040/hotels/search?hotel=${h.id}&end_date=${endDate}&start_date=${startDate}`
-			);
 			const res = await axios.get(
 				`http://localhost:4040/hotels/search?hotel=${h.id}&end_date=${endDate}&start_date=${startDate}`
 			);
