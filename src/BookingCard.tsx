@@ -29,7 +29,7 @@ const BookingCard: React.FC<HotelCardProps> = ({ b }) => {
 					: "card w-96 bg-base-100 shadow-xl"
 			}>
 			<div className='card-body'>
-				<h1 className='card-title'>
+				<h1 className='card-title text-center justify-center'>
 					{b.name}, {b.city}
 				</h1>
 				<h2>{b.num_rooms} room(s)</h2>
