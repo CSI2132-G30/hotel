@@ -91,7 +91,7 @@ import { userRouter } from "./routes/users";
 		`CREATE INDEX IF NOT EXISTS booking_end ON booking(end_date DESC)`
 	);
 
-	// This creates the view that aggregates 
+	// This creates the view that aggregates
 	await pool.query(`
 	CREATE OR REPLACE VIEW available_rooms_per_city AS
 	SELECT city, COUNT(*) AS num_available_rooms
@@ -140,15 +140,15 @@ import { userRouter } from "./routes/users";
 	RETURN NEW;
 	END;
 	$$ LANGUAGE plpgsql;`);
-	
+
 	// room count trigger
-	await pool.query (`CREATE OR REPLACE TRIGGER room_count
+	await pool.query(`CREATE OR REPLACE TRIGGER room_count
     AFTER INSERT OR DELETE ON ROOM
     FOR EACH ROW
     EXECUTE FUNCTION update_room_count();`);
 
 	// function for the star verification trigger
-	await pool.query (`CREATE OR REPLACE FUNCTION verify_hotel() RETURNS TRIGGER AS $$
+	await pool.query(`CREATE OR REPLACE FUNCTION verify_hotel() RETURNS TRIGGER AS $$
 	BEGIN
 		IF NEW.stars > 5 OR NEW.stars < 0 THEN
 			RAISE EXCEPTION 'Stars must be between 0 and 5. % has %.', NEW.name, NEW.stars;
@@ -161,35 +161,13 @@ import { userRouter } from "./routes/users";
     $$ LANGUAGE plpgsql;`);
 
 	// star verification trigger
-	await pool.query (`CREATE OR REPLACE TRIGGER verify_hotel
+	await pool.query(`CREATE OR REPLACE TRIGGER verify_hotel
     BEFORE INSERT OR UPDATE ON HOTEL
     FOR EACH ROW
     EXECUTE FUNCTION verify_hotel();`);
 
-	// function for the booking verification trigger
-	await pool.query (`CREATE OR REPLACE FUNCTION verify_booking() RETURNS TRIGGER AS $$
-	BEGIN
-		IF NEW.start_date > NEW.end_date THEN
-			RAISE EXCEPTION 'A booking starts after it ends.';
-		END IF;
-		IF NEW.start_date BETWEEN (SELECT start_date FROM booking WHERE NEW.room_id = room_id) AND (SELECT end_date FROM booking WHERE NEW.room_id = room_id) THEN
-			RAISE EXCEPTION 'Room % is booked twice at the same time', NEW.room_id;
-		END IF;
-		IF NEW.end_date BETWEEN (SELECT start_date FROM booking WHERE NEW.room_id = room_id) AND (SELECT end_date FROM booking WHERE NEW.room_id = room_id) THEN
-			RAISE EXCEPTION 'Room % is booked twice at the same time', NEW.room_id;
-		END IF;
-		RETURN NEW;
-	END;
-	$$ LANGUAGE plpgsql;`);
-
-	// booking verification trigger
-	await pool.query (`CREATE OR REPLACE TRIGGER verify_booking
-	BEFORE INSERT OR UPDATE ON BOOKING
-	FOR EACH ROW
-	EXECUTE FUNCTION verify_booking();`);
-
 	// function for the room verification trigger
-	await pool.query (`CREATE OR REPLACE FUNCTION verify_room() RETURNS TRIGGER AS $$
+	await pool.query(`CREATE OR REPLACE FUNCTION verify_room() RETURNS TRIGGER AS $$
 	BEGIN
 		IF NEW.capacity < 1 THEN
 			RAISE EXCEPTION 'Room % in hotel % has a capacity less than 1.', NEW.room_id, NEW.hotel;
@@ -199,11 +177,10 @@ import { userRouter } from "./routes/users";
 	$$ LANGUAGE plpgsql;`);
 
 	// room verification trigger
-	await pool.query (`CREATE OR REPLACE TRIGGER verify_room
+	await pool.query(`CREATE OR REPLACE TRIGGER verify_room
 	BEFORE INSERT OR UPDATE ON ROOM
 	FOR EACH ROW
 	EXECUTE FUNCTION verify_room();`);
-
 })();
 
 const app = express();
