@@ -70,12 +70,6 @@ const RoomCardEdit: React.FC<RoomCardEditProps> = ({ r }) => {
 					placeholder={r.capacity.toString()}
 					value={capacity}
 					onChange={onChange(setCapacity)}></textarea>
-				<p>Hotel ID:</p>
-				<textarea
-					className='textarea textarea-bordered'
-					placeholder={r.hotel.toString()}
-					value={hotel_id}
-					onChange={onChange(setHotel_id)}></textarea>
 				<p>Room Number:</p>
 				<textarea
 					className='textarea textarea-bordered'

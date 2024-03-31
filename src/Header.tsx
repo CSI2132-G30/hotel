@@ -1,16 +1,23 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
 	const [login, setHandledLogin] = useState(false);
+	const [admin, setAdmin] = useState(false);
 	useEffect(() => {
 		if (localStorage.getItem("token")) {
 			setHandledLogin(true);
+		}
+		if (localStorage.getItem("admin")) {
+			setAdmin(true);
 		}
 	}, []);
 
 	function handleLogoutClick() {
 		localStorage.clear();
+		const navigate = useNavigate();
+		navigate("/");
 		location.reload();
 	}
 
@@ -42,6 +49,23 @@ export default function Header() {
 							Book Now
 						</Link>
 					</li>
+					<li>
+						<Link className={admin ? 'nav-link font-weight-bold' : 'nav-link font-weight-bold hidden'} to={"/managebookings"}>
+							Manage Bookings
+						</Link>
+					</li>
+						<li>
+						<Link className={admin ? 'nav-link font-weight-bold' : 'nav-link font-weight-bold hidden'} to={"/managehotels"}>
+							Manage Rooms
+						</Link>
+						</li>
+						<li>
+						<Link className={admin ? 'nav-link font-weight-bold' : 'nav-link font-weight-bold hidden'} to={"/manageusers"}>
+							Manage Users
+						</Link>
+						</li>
+					
+					
 				</ul>
 			</div>
 		</div>

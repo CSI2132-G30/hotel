@@ -24,7 +24,7 @@ const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b }) => {
 
 		try {
 			await axios.patch(
-				`http://localhost:4040/hotels/booking/?room_id=${room_id}&customer_id=${customer_id}&start_date=${start_date}&end_date=${end_date}&checked_in=${checked_in}`
+				`http://localhost:4040/hotels/booking/?room_id=${room_id}&customer_id=${customer_id}&start_date=${start_date}&end_date=${end_date}&checked_in=${checked_in}&oldroom_id=${b.room_id}&oldcustomer_id=${b.customer_id}&oldstart_date=${b.start_date}`
 			);
 		} catch (error) {
 			console.error("Error fetching data:", error);

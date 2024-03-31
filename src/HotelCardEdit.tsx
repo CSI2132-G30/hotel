@@ -21,16 +21,7 @@ const HotelCardEdit: React.FC<HotelCardEditProps> = ({ h }) => {
 	async function updateHotel() {
 		try {
 			const res = await axios.patch(
-				`http://localhost:4040/hotels/${h.id}`,
-				{
-					name: name,
-					address: address,
-					stars: stars,
-					city: city,
-					chain: chain,
-					num_rooms: num_rooms,
-					manager: manager,
-				}
+				`http://localhost:4040/hotels/${h.id}?name=${name}&address=${address}&stars=${stars}&city=${city}&chain=${chain}&num_rooms=${num_rooms}&manager=${manager}`
 			);
 			console.log(res.data);
 		} catch (error) {
@@ -108,11 +99,10 @@ const HotelCardEdit: React.FC<HotelCardEditProps> = ({ h }) => {
 						value={chain}
 						onChange={(v) => setChain(v.target.value)}></textarea>
 					<h3>num_rooms:</h3>
-					<textarea
-						className='textarea textarea-bordered'
-						placeholder={h.num_rooms.toString()}
-						value={num_rooms.toString()}
-						onChange={(v) => setNumRooms(parseInt(v.target.value))}></textarea>
+					
+					<div>
+						{num_rooms.toString()}
+					</div>
 
 					<h3>manager:</h3>
 					<textarea

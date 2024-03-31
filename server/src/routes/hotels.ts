@@ -1,5 +1,6 @@
 import express from "express";
 import { pool } from "../database";
+import { authenticate_employee } from "../middleware/auth";
 
 const router = express.Router();
 
@@ -142,9 +143,9 @@ router.patch("/booking", async (req, res) => {
 		end_date = COALESCE($4, end_date),
     	checked_in = COALESCE($5, checked_in)
 		WHERE
-		room_id = $1 AND
-		customer_id = $2 AND
-		start_date = $3
+		room_id = $6 AND
+		customer_id = $7 AND
+		start_date = $8
 		RETURNING *
 `,
 		[
@@ -153,6 +154,9 @@ router.patch("/booking", async (req, res) => {
 			req.query.start_date,
 			req.query.end_date,
 			req.query.checked_in,
+			req.query.oldroom_id,
+			req.query.oldcustomer_id,
+			req.query.oldstart_date,
 		]
 	);
 
