@@ -14,7 +14,7 @@ const RoomCardEdit: React.FC<RoomCardEditProps> = ({ r }) => {
 	const [price, setPrice] = useState<number>(r.price);
 	const [capacity, setCapacity] = useState<number>(r.capacity);
 	const [view, setView] = useState<string>(r.view);
-	const [amenities, setAmenities] = useState<string[]>(r.amenities);
+	const [amenities, setAmenities] = useState<string>(r.amenities);
 	const [extendible, setExtendible] = useState<boolean>(r.extendible);
 	const [damage, setDamage] = useState<boolean>(r.damage);
 	const [deleted, setDeleted] = useState<boolean>(false);
@@ -103,9 +103,10 @@ const RoomCardEdit: React.FC<RoomCardEditProps> = ({ r }) => {
 				<p>Amenities:</p>
 				<textarea
 					className='textarea textarea-bordered'
-					placeholder={r.amenities.join(" , ")}
+					placeholder={r.amenities}
 					value={amenities}
-					onChange={onChange(setAmenities)}></textarea>
+					onChange={onChange(setAmenities)}
+					></textarea>
 				<div className='card-actions justify-end'>
 				<button
 					className='btn btn-primary'

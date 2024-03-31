@@ -43,7 +43,7 @@ declare global {
 		price: number;
 		capacity: number;
 		view: string;
-		amenities: string[];
+		amenities: string;
 		extendible: boolean;
 		damage: boolean;
 	};

@@ -201,26 +201,28 @@ router.get("/rooms/:id", async (req, res) => {
 });
 
 // delete room by id
+// fix amenities to allow arrays
 router.patch("/rooms/:id", async (req, res) => {
 	const { rows } = await pool.query<Room>(
 		`
-    UPDATE room
-      SET hotel = COALESCE($1, hotel),
-      number = COALESCE($2, number),
-      price = COALESCE($3, price),
+	UPDATE room
+	  SET hotel = COALESCE($1, hotel),
+	  number = COALESCE($2, number),
+	  price = COALESCE($3, price),
 	  capacity = COALESCE($4, capacity),
-	  amenities = COALESCE($5, amenities),
-	  extendible = COALESCE($6, extendible),
-	  damage = COALESCE($7, damage)
-      WHERE id = $8
-      RETURNING *
-      `,
+	  amenities = COALESCE($5, $6),
+	  extendible = COALESCE($7, extendible),
+	  damage = COALESCE($8, damage)
+	  WHERE id = $9
+	  RETURNING *
+	  `,
 		[
 			req.query.hotel,
 			req.query.number,
 			req.query.price,
 			req.query.capacity,
 			req.query.amenities,
+			(req.query.amenities as string)?.split(",") || [], // Fix: Ensure amenities is an array
 			req.query.extendible,
 			req.query.damage,
 			req.params.id,
