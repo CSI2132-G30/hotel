@@ -11,14 +11,12 @@ const HotelCardBookingsEdit: React.FC<HotelCardBookingsEditProps> = ({ h }) => {
 
 	async function getBookings() {
 		try {
-			console.log(
-				`http://localhost:4040/hotels/bookings/${h.id}`
-			);
+			console.log(`http://localhost:4040/hotels/bookings/${h.id}`);
 			const res = await axios.get(
 				`http://localhost:4040/hotels/bookings/${h.id}`
 			);
 			setBookings(res.data);
-            console.log(res.data);
+			console.log(res.data);
 		} catch (error) {
 			console.error("Error fetching data:", error);
 		}

@@ -103,23 +103,23 @@ export default function Login() {
 								onClick={() => setAdmin(true)}>
 								Login as Employee
 							</button>
-							<div className="divider divider-neutral w-full h-2">OR</div> 
-							<a className="btn btn-s w-full rounded-3xl" href="/register">
+							<div className='divider divider-neutral w-full h-2'>OR</div>
+							<a className='btn btn-s w-full rounded-3xl' href='/register'>
 								Register an Account
 							</a>
 						</div>
 					</form>
 				</div>
-				
 			</div>
-			{error
-        ? <div className="w-96">
-		<div className="alert alert-error">
-<span>{error}</span>
-</div>
-</div>
-        : <div></div>
-      }
+			{error ? (
+				<div className='w-96'>
+					<div className='alert alert-error'>
+						<span>{error}</span>
+					</div>
+				</div>
+			) : (
+				<div></div>
+			)}
 		</>
 	);
 }

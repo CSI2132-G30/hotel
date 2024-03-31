@@ -3,10 +3,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function ManageHotels() {
+	const [hotels, setHotels] = useState<Hotel[]>([]);
 
-    const [hotels, setHotels] = useState<Hotel[]>([]);
-
-    async function getHotels() {
+	async function getHotels() {
 		try {
 			const res = await axios.get(`http://localhost:4040/hotels/`);
 			setHotels(res.data);
@@ -15,14 +14,11 @@ export default function ManageHotels() {
 		}
 	}
 
-    useEffect(() => {
-        getHotels();
+	useEffect(() => {
+		getHotels();
 	}, []);
 
-    return (
-        hotels.map((c) => (
-            <HotelCardBookingsEdit h={c}></HotelCardBookingsEdit>
-        )
-    )
-    );
+	return hotels.map((c) => (
+		<HotelCardBookingsEdit h={c}></HotelCardBookingsEdit>
+	));
 }

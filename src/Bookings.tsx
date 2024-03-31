@@ -73,15 +73,15 @@ export default function Bookings() {
 						</button>
 					</div>
 				</div>
-				<div className="w-full flex justify-center pt-6">
-				<div className='w-1/2 flex flex-col gap-2 align-middle justify-center items-center'>
-					{hotels.map((c) => (
-						<HotelCard
-							h={c}
-							startDate={startDate}
-							endDate={endDate}></HotelCard>
-					))}
-				</div>
+				<div className='w-full flex justify-center pt-6'>
+					<div className='w-1/2 flex flex-col gap-2 align-middle justify-center items-center'>
+						{hotels.map((c) => (
+							<HotelCard
+								h={c}
+								startDate={startDate}
+								endDate={endDate}></HotelCard>
+						))}
+					</div>
 				</div>
 			</div>
 		</>

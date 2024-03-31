@@ -11,9 +11,7 @@ const HotelCardEdit: React.FC<HotelCardEditProps> = ({ h }) => {
 
 	async function getRooms() {
 		try {
-			console.log(
-				`http://localhost:4040/hotels/rooms?hotel=${h.id}`
-			);
+			console.log(`http://localhost:4040/hotels/rooms?hotel=${h.id}`);
 			const res = await axios.get(
 				`http://localhost:4040/hotels/rooms?hotel=${h.id}`
 			);
