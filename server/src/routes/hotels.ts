@@ -177,7 +177,7 @@ router.get("/luxury/:city", async (req, res) => {
 		SELECT *
 		FROM hotel
 		WHERE city = $1
-		AND stars > (SELECT avg_stars FROM average_stars)
+		AND stars >= (SELECT avg_stars FROM average_stars)
 		`,
 		[req.params.city]
 	);
