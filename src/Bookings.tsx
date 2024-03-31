@@ -9,6 +9,9 @@ export default function Bookings() {
 	const [startDate, setStartDate] = useState<string>("");
 	const [endDate, setEndDate] = useState<string>("");
 	const [hotels, setHotels] = useState<Hotel[]>([]);
+	const [admin, setAdmin] = useState(false);
+	const [customers, setCustomers] = useState<User[]>([]);
+	const [customer_id, setCustomer_id] = useState<string>();
 
 	async function getCities() {
 		try {
@@ -32,13 +35,38 @@ export default function Bookings() {
 		}
 	}
 
+	async function getCustomers() {
+		try {
+			const res = await axios.get(`http://localhost:4040/users/customers`);
+			setCustomers(res.data);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	}
+
 	useEffect(() => {
+		if (JSON.parse(localStorage.getItem("admin")!)) {
+			setAdmin(true);
+		}
+		getCustomers();
 		getCities();
 	}, []);
 	return (
 		<>
 			<div className='flex-column text-center justify-center items-center align-middle'>
 				<h1 className='text-center text-6xl py-8'>Book Now</h1>
+				<div className={admin ? "" : "hidden"}>
+					{" "}
+					<span className='pr-2'>Select Customer:</span>
+					<select
+						className='select select-bordered'
+						value={customer_id}
+						onChange={(v) => setCustomer_id(v.target.value)}>
+						{customers.map((c) => (
+							<option>{c.ssn}</option>
+						))}
+					</select>
+				</div>
 				<div className='flex items-center justify-center align-middle'>
 					<div className='flex flex-row gap-4'>
 						<select
