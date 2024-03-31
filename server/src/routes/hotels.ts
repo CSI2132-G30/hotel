@@ -167,9 +167,19 @@ router.get("/average/:id", async (req, res) => {
 	res.json(average.rows[0].avg);
 });
 
-router.get("/sale", async (req, res) => {
+router.get("/luxury/:city", async (req, res) => {
 	const average = await pool.query(
-		"SELECT * FROM room WHERE price < (SELECT AVG(price) FROM room)"
+		`WITH average_stars AS (
+			SELECT AVG(stars) AS avg_stars
+			FROM hotel
+			WHERE city = $1
+		)
+		SELECT *
+		FROM hotel
+		WHERE city = $1
+		AND stars > (SELECT avg_stars FROM average_stars)
+		`,
+		[req.params.city]
 	);
 	res.json(average.rows);
 });

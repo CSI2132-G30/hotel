@@ -42,8 +42,10 @@ const HotelCard: React.FC<HotelCardProps> = ({ h, startDate, endDate }) => {
 			<div className='collapse bg-base-200'>
 				<input type='checkbox' className='peer' />
 				<div className='collapse-title border border-base-300 bg-base-200 '>
-					{h.name}, Average Price: {average}
+					<span className=' text-yellow-300'>{h.stars}/5 </span> {h.name},
+					Average Price: {average}
 				</div>
+
 				<div className='collapse-content flex flex-col justify-center items-center gap-2'>
 					{rooms.map((r) => (
 						<RoomCard r={r} startDate={startDate} endDate={endDate}></RoomCard>

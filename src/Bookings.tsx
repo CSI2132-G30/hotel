@@ -4,6 +4,7 @@ import HotelCard from "./HotelCard";
 
 export default function Bookings() {
 	const [cities, setCities] = useState<City[]>([]);
+	const [luxury, setLuxury] = useState<boolean>(false);
 	const [city, setCity] = useState<string>("Ottawa");
 	const [startDate, setStartDate] = useState<string>("");
 	const [endDate, setEndDate] = useState<string>("");
@@ -20,7 +21,11 @@ export default function Bookings() {
 
 	async function getHotels() {
 		try {
-			const res = await axios.get(`http://localhost:4040/hotels/city/${city}`);
+			const res = await axios.get(
+				luxury
+					? `http://localhost:4040/hotels/luxury/${city}`
+					: `http://localhost:4040/hotels/city/${city}`
+			);
 			setHotels(res.data);
 		} catch (error) {
 			console.error("Error fetching data:", error);
@@ -64,8 +69,13 @@ export default function Bookings() {
 						</div>
 						<div className='form-control justify-center'>
 							<label className='cursor-pointer label'>
-								<span className='label-text px-2'>Sale</span>
-								<input type='checkbox' className='checkbox checkbox-success' />
+								<span className='label-text px-2'>Luxury</span>
+								<input
+									type='checkbox'
+									className='checkbox checkbox-success'
+									checked={luxury}
+									onChange={() => setLuxury(!luxury)}
+								/>
 							</label>
 						</div>
 						<button className='btn btn-accent' onClick={getHotels}>
