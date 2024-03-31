@@ -32,7 +32,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ r, startDate, endDate }) => {
 				<h2>Price: {r.price}</h2>
 				<h3>Capacity: {r.capacity}</h3>
 				<p>{r.view}</p>
-				<p>Amenities: {r.amenities.join(", ")}</p>
+				<p>Amenities: {r.amenities}</p>
 				<div className='card-actions justify-end'>
 					<button className='btn btn-primary' onClick={makeBooking}>
 						Book Now

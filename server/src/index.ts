@@ -52,7 +52,7 @@ import { userRouter } from "./routes/users";
 	price FLOAT,
 	capacity INTEGER,
 	view TEXT,
-	amenities TEXT[],
+	amenities TEXT,
 	extendible BOOLEAN,
 	damage BOOLEAN
 )`);
