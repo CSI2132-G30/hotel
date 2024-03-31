@@ -37,7 +37,7 @@ declare global {
 	};
 
 	type Room = {
-		room_id: number;
+		id: number;
 		hotel: number;
 		number: number;
 		price: number;

@@ -14,7 +14,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ r, startDate, endDate }) => {
 			await axios.post(
 				// change the customer id
 				`http://localhost:4040/hotels/booking?room_id=${
-					r.room_id
+					r.id
 				}&customer_id=${
 					JSON.parse(localStorage.getItem("token")!).ssn
 				}&start_date=${startDate}&end_date=${endDate}&checked_in=FALSE`

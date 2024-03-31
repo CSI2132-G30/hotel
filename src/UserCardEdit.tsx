@@ -59,13 +59,13 @@ const UserCardEdit: React.FC<UserCardEditProps> = ({ u }) => {
 					: "card w-96 bg-base-100 shadow-xl"
 			}>
 			<form className='card-body' id='myForm'>
-				<h1 className='card-title'>Name: {u.name}</h1>
-				<h2>SSN:</h2>
+				<h1 className='card-title'>SSN: {u.ssn}</h1>
+				<h2>Name:</h2>
 				<textarea
 					className='textarea textarea-bordered'
-					placeholder={u.ssn}
-					value={ssn}
-					onChange={onChange(setSsn)}></textarea>
+					placeholder={u.name}
+					value={name}
+					onChange={onChange(setName)}></textarea>
 				<h3>Username:</h3>
 				<textarea
 					className='textarea textarea-bordered'

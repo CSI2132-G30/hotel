@@ -15,6 +15,7 @@ const HotelCardEdit: React.FC<HotelCardEditProps> = ({ h }) => {
 			const res = await axios.get(
 				`http://localhost:4040/hotels/rooms?hotel=${h.id}`
 			);
+			console.log(res.data);
 			setRooms(res.data);
 		} catch (error) {
 			console.error("Error fetching data:", error);
