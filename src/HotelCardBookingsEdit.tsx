@@ -12,10 +12,10 @@ const HotelCardBookingsEdit: React.FC<HotelCardBookingsEditProps> = ({ h }) => {
 	async function getBookings() {
 		try {
 			console.log(
-				`http://localhost:4040/hotels/bookings?hotel=${h.id}`
+				`http://localhost:4040/hotels/bookings/${h.id}`
 			);
 			const res = await axios.get(
-				`http://localhost:4040/hotels/bookings?hotel=${h.id}`
+				`http://localhost:4040/hotels/bookings/${h.id}`
 			);
 			setBookings(res.data);
             console.log(res.data);
