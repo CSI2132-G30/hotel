@@ -81,16 +81,16 @@ router.get("/booking/:room_id/:customer_id/:start_date", async (req, res) => {
 });
 
 //get all bookings by hotel, return booking info
-router.get("/bookings", async (req, res) => {
+router.get("/bookings/:hotel_id", async (req, res) => {
 	const { rows } = await pool.query<Booking>(
-		`SELECT b.start_date, r.id AS room_id, b.end_date, h.id AS hotel_id, h.name AS name, h.stars AS stars, h.city AS city, h.num_rooms AS num_rooms, h.address AS address, h.manager AS manager
-		FROM booking b
-		INNER JOIN room r ON b.room_id = r.id
-		INNER JOIN hotel h ON r.hotel = h.id
-		WHERE r.hotel = $1`,
-		[req.query.hotel_id]
+		`SELECT h.id AS hotel_id, h.name AS hotel_name, b.start_date, b.end_date, r.id AS room_id, r.number AS room_number, r.price AS room_price, r.capacity AS room_capacity
+		FROM hotel h
+		INNER JOIN room r ON h.id = r.hotel
+		INNER JOIN booking b ON r.id = b.room_id
+		WHERE h.id = $1`,
+		[req.params.hotel_id]
 	);
-	
+
 	res.json(rows);
 });
 
