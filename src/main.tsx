@@ -10,6 +10,7 @@ import ManageHotels from "./ManageHotels.tsx";
 import "./index.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ManageUsers from "./ManageUsers.tsx";
+import ManageBookings from "./ManageBookings.tsx";
 
 /*Displays the App component*/
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -25,6 +26,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Route path='/login' Component={Login} />
         <Route path='/managehotels' Component={ManageHotels} />
         <Route path='/manageusers' Component={ManageUsers} />
+		<Route path='/managebookings' Component={ManageBookings} />
+		
 			</Routes>
 		</Router>
 	</React.StrictMode>

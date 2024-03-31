@@ -1,4 +1,4 @@
-import HotelCardEdit from "./HotelCardEdit";
+import HotelCardBookingsEdit from "./HotelCardBookingsEdit";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -21,7 +21,7 @@ export default function ManageHotels() {
 
     return (
         hotels.map((c) => (
-            <HotelCardEdit h={c}></HotelCardEdit>
+            <HotelCardBookingsEdit h={c}></HotelCardBookingsEdit>
         )
     )
     );

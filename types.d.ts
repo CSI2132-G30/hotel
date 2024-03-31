@@ -11,12 +11,7 @@ declare global {
 		address: string;
 		manager: number;
 	};
-	// id SERIAL PRIMARY KEY,
-	// name TEXT,
-	// num_hotels SMALLINT,
-	// hq_address TEXT,
-	// email TEXT,
-	// phone_num TEXT
+	
 	type Chain = {
 		id: number;
 		name: string;
