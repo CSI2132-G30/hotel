@@ -6,9 +6,15 @@ import axios from "axios";
 export default function Login() {
 	const [username, setusername] = useState("");
 	const [password, setPassword] = useState("");
-	const [error, setError] = useState("");
+	const [error, setError] = useState(false);
 	const [handledLogin, setHandledLogin] = useState(false);
 	const [admin, setAdmin] = useState(false);
+
+	function handleerror() {
+		setTimeout(() => {
+			setError(false);
+		}, 2000);
+	}
 
 	// check if user is already logged in
 	useEffect(() => {
@@ -33,6 +39,7 @@ export default function Login() {
 		const data = await response.data;
 		if (data.error) {
 			setError(data.error);
+			handleerror();
 		} else {
 			localStorage.setItem("token", JSON.stringify(data));
 			localStorage.setItem("admin", admin.toString());
@@ -48,12 +55,12 @@ export default function Login() {
 	return (
 		<>
 			<div className='w-screen h-[calc(57rem-268px)] flex items-center justify-center'>
-				<div className='bg-slate-100 w-96 h-3/4 rounded-md border-2'>
+				<div className='w-96 h-3/4 rounded-md border-2'>
 					<form
 						onSubmit={handleLogin}
 						className='h-20 w-fill flex items-center justify-top flex-col'>
 						<div className='pt-6'>
-							<span className='text-3xl text-black'> Login </span>
+							<span className='text-3xl text-white'> Login </span>
 						</div>
 						<div className='w-full pt-4 pl-6'>
 							<div className='justify-items-start'>Username</div>
@@ -62,7 +69,7 @@ export default function Login() {
 							<input
 								type='text'
 								name='username'
-								className='input w-full bg-white'
+								className='input w-full bg-slate-500'
 								value={username}
 								required
 								onChange={onChange(setusername)}
@@ -75,7 +82,7 @@ export default function Login() {
 							<input
 								type='password'
 								name='password'
-								className='input w-full bg-white'
+								className='input w-full bg-slate-500'
 								value={password}
 								required
 								onChange={onChange(setPassword)}
@@ -96,14 +103,23 @@ export default function Login() {
 								onClick={() => setAdmin(true)}>
 								Login as Employee
 							</button>
-							<div className="divider divider-neutral w-full h-2">OR</div> 
-							<a className="btn btn-s w-full rounded-3xl" href="/register">
+							<div className='divider divider-neutral w-full h-2'>OR</div>
+							<a className='btn btn-s w-full rounded-3xl' href='/register'>
 								Register an Account
 							</a>
 						</div>
 					</form>
 				</div>
 			</div>
+			{error ? (
+				<div className='w-96'>
+					<div className='alert alert-error'>
+						<span>{error}</span>
+					</div>
+				</div>
+			) : (
+				<div></div>
+			)}
 		</>
 	);
 }

@@ -53,17 +53,6 @@ router.post("/", async (req, res) => {
 	res.json(rows[0]);
 });
 
-// start_date: Date;
-// 	end_date: Date;
-// 	id: number;
-// 	name: string;
-// 	chain: string;
-// 	stars: number;
-// 	city: string;
-// 	num_rooms: number;
-// 	address: string;
-// 	manager: number;
-
 // get booking
 router.get("/booking/:customer_id/", async (req, res) => {
 	const { rows } = await pool.query<Booking>(
@@ -89,6 +78,20 @@ router.get("/booking/:room_id/:customer_id/:start_date", async (req, res) => {
 	);
 
 	res.json(rows[0]);
+});
+
+//get all bookings by hotel, return booking info
+router.get("/bookings/:hotel_id", async (req, res) => {
+	const { rows } = await pool.query<Booking>(
+		`SELECT h.id AS hotel_id, h.name AS hotel_name, b.start_date, b.end_date, r.id AS room_id, r.number AS room_number, r.price AS room_price, r.capacity AS room_capacity, b.customer_id, b.checked_in
+		FROM hotel h
+		INNER JOIN room r ON h.id = r.hotel
+		INNER JOIN booking b ON r.id = b.room_id
+		WHERE h.id = $1`,
+		[req.params.hotel_id]
+	);
+
+	res.json(rows);
 });
 
 // post booking
@@ -156,17 +159,27 @@ router.patch("/booking", async (req, res) => {
 	res.json(rows[0]);
 });
 
-router.get("/average", async (req, res) => {
+router.get("/average/:id", async (req, res) => {
 	const average = await pool.query(
 		"SELECT AVG(price) FROM room WHERE hotel = $1",
-		[req.query.id]
+		[req.params.id]
 	);
-	res.json(average.rows[0]);
+	res.json(average.rows[0].avg);
 });
 
-router.get("/sale", async (req, res) => {
+router.get("/luxury/:city", async (req, res) => {
 	const average = await pool.query(
-		"SELECT * FROM room WHERE price < (SELECT AVG(price) FROM room)"
+		`WITH average_stars AS (
+			SELECT AVG(stars) AS avg_stars
+			FROM hotel
+			WHERE city = $1
+		)
+		SELECT *
+		FROM hotel
+		WHERE city = $1
+		AND stars >= (SELECT avg_stars FROM average_stars)
+		`,
+		[req.params.city]
 	);
 	res.json(average.rows);
 });
