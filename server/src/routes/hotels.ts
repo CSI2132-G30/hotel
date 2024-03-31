@@ -159,12 +159,12 @@ router.patch("/booking", async (req, res) => {
 	res.json(rows[0]);
 });
 
-router.get("/average", async (req, res) => {
+router.get("/average/:id", async (req, res) => {
 	const average = await pool.query(
 		"SELECT AVG(price) FROM room WHERE hotel = $1",
-		[req.query.id]
+		[req.params.id]
 	);
-	res.json(average.rows[0]);
+	res.json(average.rows[0].avg);
 });
 
 router.get("/sale", async (req, res) => {
