@@ -180,8 +180,7 @@ router.get("/available/:city", async (req, res) => {
 		[req.params.city]
 	);
 	res.json(available.rows[0].num_available_rooms);
-}
-);
+});
 
 router.get("/luxury/:city", async (req, res) => {
 	const average = await pool.query(
@@ -204,6 +203,15 @@ router.get("/rooms", async (req, res) => {
 	const rooms = await pool.query<Room>("SELECT * FROM room WHERE hotel = $1", [
 		req.query.hotel,
 	]);
+	res.json(rooms.rows);
+});
+
+router.get("/rooms/hotel/:id", async (req, res) => {
+	console.log(req.query);
+	const rooms = await pool.query<Room>(
+		"SELECT * FROM room WHERE hotel = $1 ORDER BY room.id",
+		[req.params.id]
+	);
 	res.json(rooms.rows);
 });
 
@@ -316,7 +324,6 @@ router.get("/:id", async (req, res) => {
 	]);
 	res.json(hotels.rows[0]);
 });
-
 
 // delete hotel by id
 router.delete("/:id", async (req, res) => {

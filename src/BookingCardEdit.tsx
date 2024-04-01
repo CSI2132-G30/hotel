@@ -5,37 +5,45 @@ import { onChange } from "../utils/event";
 
 interface BookingCardEditProps {
 	b: Booking;
+	h: Hotel;
 }
 
-const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b }) => {
-	const [room_id, setRoom_id] = useState<number>(b.room_id);
+const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b, h }) => {
+	console.log(h);
+	const [room_id, setRoom_id] = useState<string>(b.room_id.toString());
 	const [customer_id, setCustomer_id] = useState<string>(b.customer_id);
-	const [start_date, setStart_date] = useState<string>(moment(b.start_date).utc().format("YYYY-MM-DD"));
-	const [end_date, setEnd_date] = useState<string>(moment(b.end_date).utc().format("YYYY-MM-DD"));
+	const [start_date, setStart_date] = useState<string>(
+		moment(b.start_date).utc().format("YYYY-MM-DD")
+	);
+	const [end_date, setEnd_date] = useState<string>(
+		moment(b.end_date).utc().format("YYYY-MM-DD")
+	);
 	const [checked_in, setChecked_in] = useState<boolean>(b.checked_in);
 	const [cancelled, setCancelled] = useState<boolean>(false);
-    const [customers, setCustomers] = useState<User[]>([]);
-    const [rooms, setRooms] = useState<Room[]>([]);
+	const [customers, setCustomers] = useState<User[]>([]);
+	const [rooms, setRooms] = useState<Room[]>([]);
 
+	async function getCustomers() {
+		try {
+			const res = await axios.get(`http://localhost:4040/users/customers`);
+			setCustomers(res.data);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	}
 
-    async function getCustomers() {
-        try {
-            const res = await axios.get(`http://localhost:4040/users/customers`);
-            setCustomers(res.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    }
-
-    async function getRooms() {
-        try {
-            const res = await axios.get(`http://localhost:4040/hotels/hotel/rooms/?hotel_id=${b.room_id}`);
-            console.log(res.data);
-            setRooms(res.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    }
+	async function getRooms() {
+		console.log(`http://localhost:4040/hotels/rooms/hotel/${h.id}`);
+		try {
+			const res = await axios.get(
+				`http://localhost:4040/hotels/rooms/hotel/${h.id}`
+			);
+			console.log("rooms", res.data);
+			setRooms(res.data);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	}
 
 	async function updateBooking() {
 		var form = document.getElementById("myForm");
@@ -66,11 +74,10 @@ const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b }) => {
 		}
 	}
 
-    useEffect(() => {
-        getCustomers();
-        getRooms();
-    }
-    , []);
+	useEffect(() => {
+		getCustomers();
+		getRooms();
+	}, []);
 
 	return (
 		<div>
@@ -82,32 +89,32 @@ const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b }) => {
 				}>
 				<div className='card-body'>
 					<form className='p-0' id='myForm'>
-						<h1 className='card-title'>Room ID</h1>
+						<h1 className='card-title'>Room ID: {b.room_id}</h1>
 						<select
 							className='select select-bordered'
-							
-							value={room_id}
-							onChange={(v) => setRoom_id(parseInt(v.target.value))}>
-                            {rooms.map((c) => (
-                                <option>{c.room_id}</option>
-                            ))}
-                            </select>
+							value={b.room_id}
+							onChange={(v) => setRoom_id(v.target.value)}>
+							{rooms.map((c) => (
+								<option>{c.number}</option>
+							))}
+						</select>
 						<h2>CustomerID:</h2>
 						<select
 							className='select select-bordered'
-							
 							value={customer_id}
 							onChange={(v) => setCustomer_id(v.target.value)}>
-                            {customers.map((c) => (
-                                <option>{c.ssn}</option>
-                            ))}
-                            </select>
+							{customers.map((c) => (
+								<option>{c.ssn}</option>
+							))}
+						</select>
 						<h3>Start Date:</h3>
 						<input
 							className='textarea textarea-bordered'
 							type='date'
 							value={start_date}
-							onChange={(v) => {setStart_date(v.target.value)}}></input>
+							onChange={(v) => {
+								setStart_date(v.target.value);
+							}}></input>
 						<p>End Date:</p>
 						<input
 							className='textarea textarea-bordered'

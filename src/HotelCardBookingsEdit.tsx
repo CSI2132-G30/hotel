@@ -32,8 +32,8 @@ const HotelCardBookingsEdit: React.FC<HotelCardBookingsEditProps> = ({ h }) => {
 					{h.name}
 				</div>
 				<div className='collapse-content flex flex-wrap justify-center items-center gap-2'>
-					{bookings.map((h) => (
-						<BookingCardEdit b={h}></BookingCardEdit>
+					{bookings.map((b) => (
+						<BookingCardEdit b={b} h={h}></BookingCardEdit>
 					))}
 				</div>
 			</div>
