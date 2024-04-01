@@ -170,7 +170,7 @@ import { userRouter } from "./routes/users";
 	await pool.query(`CREATE OR REPLACE FUNCTION verify_room() RETURNS TRIGGER AS $$
 	BEGIN
 		IF NEW.capacity < 1 THEN
-			RAISE EXCEPTION 'Room % in hotel % has a capacity less than 1.', NEW.room_id, NEW.hotel;
+			RAISE EXCEPTION 'Room % in hotel % has a capacity less than 1.', NEW.id, NEW.hotel;
 		END IF;
 		RETURN NEW;
 	END;
