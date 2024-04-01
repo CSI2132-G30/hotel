@@ -9,7 +9,7 @@ declare global {
 		city: string;
 		num_rooms: number;
 		address: string;
-		manager: number;
+		manager: string;
 	};
 
 	type Chain = {
