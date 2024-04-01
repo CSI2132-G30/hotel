@@ -236,6 +236,28 @@ router.patch("/rooms/:id", async (req, res) => {
 	res.json(rows[0]);
 });
 
+router.post("/rooms", async (req, res) => {
+	console.log(req.query, req.params);
+	const { rows } = await pool.query<Room>(
+		`
+		INSERT INTO room (hotel, number, price, capacity, view, amenities, extendible, damage)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+		RETURNING *
+	  `,
+		[
+			req.query.hotel,
+			req.query.number,
+			req.query.price,
+			req.query.capacity,
+			req.query.view,
+			req.query.amenities,
+			req.query.extendible,
+			req.query.damage,
+		]
+	);
+	res.json(rows[0]);
+});
+
 // update room by id
 router.delete("/rooms/:id", async (req, res) => {
 	const rooms = await pool.query("DELETE FROM room WHERE id = $1 RETURNING *", [
