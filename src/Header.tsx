@@ -32,56 +32,46 @@ export default function Header() {
 				<ul className='menu menu-horizontal px-1'>
 					<li>
 						{login ? (
-							<Link className = "text-error" onClick={handleLogoutClick} to={"/"}>
+							<Link className='text-error' onClick={handleLogoutClick} to={"/"}>
 								Logout
 							</Link>
 						) : (
-							<a className = "text-success" href='/login'>Login</a>
+							<a className='text-success' href='/login'>
+								Login
+							</a>
 						)}
 					</li>
 					<li>
 						<Link
-							className={login ? "nav-link font-weight-bold" : "btn-error btn-disabled"}
+							className={login ? "nav-link font-weight-bold" : " hidden"}
 							to={"/account"}>
 							My Bookings
 						</Link>
 					</li>
 					<li>
 						<Link
-							className={login ? "nav-link font-weight-bold" : "btn-error btn-disabled"}
+							className={login ? "nav-link font-weight-bold" : "hidden"}
 							to={"/bookings"}>
 							Book Now
 						</Link>
 					</li>
 					<li>
 						<Link
-							className={
-								admin
-									? "nav-link font-weight-bold"
-									: "nav-link btn-error btn-disabled"
-							}
+							className={admin ? "nav-link font-weight-bold" : "hidden"}
 							to={"/managebookings"}>
 							Manage Bookings
 						</Link>
 					</li>
 					<li>
 						<Link
-							className={
-								admin
-									? "nav-link font-weight-bold"
-									: "nav-link btn-error btn-disabled"
-							}
+							className={admin ? "nav-link font-weight-bold" : "hidden"}
 							to={"/managehotels"}>
 							Manage Rooms
 						</Link>
 					</li>
 					<li>
 						<Link
-							className={
-								admin
-									? "nav-link font-weight-bold"
-									: "nav-link btn-error btn-disabled"
-							}
+							className={admin ? "nav-link font-weight-bold" : "hidden"}
 							to={"/manageusers"}>
 							Manage Users
 						</Link>
