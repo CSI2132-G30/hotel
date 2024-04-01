@@ -15,7 +15,7 @@ const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b }) => {
 	const [checked_in, setChecked_in] = useState<boolean>(b.checked_in);
 	const [cancelled, setCancelled] = useState<boolean>(false);
     const [customers, setCustomers] = useState<User[]>([]);
-
+    const [rooms, setRooms] = useState<Room[]>([]);
 
 
     async function getCustomers() {
@@ -27,6 +27,14 @@ const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b }) => {
         }
     }
 
+    async function getRooms() {
+        try {
+            const res = await axios.get(`http://localhost:4040/hotels/hotel/rooms/?hotel_id=${b.room_id}`);
+            setRooms(res.data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
 
 	async function updateBooking() {
 		var form = document.getElementById("myForm");
@@ -59,6 +67,7 @@ const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b }) => {
 
     useEffect(() => {
         getCustomers();
+        getRooms();
     }
     , []);
 
@@ -73,11 +82,15 @@ const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b }) => {
 				<div className='card-body'>
 					<form className='p-0' id='myForm'>
 						<h1 className='card-title'>Room ID</h1>
-						<textarea
-							className='textarea textarea-bordered'
-							placeholder={b.room_id.toString()}
+						<select
+							className='select select-bordered'
+							
 							value={room_id}
-							onChange={onChange(setRoom_id)}></textarea>
+							onChange={(v) => setRoom_id(v.target.value)}>
+                            {rooms.map((c) => (
+                                <option>{c.room_id}</option>
+                            ))}
+                            </select>
 						<h2>CustomerID:</h2>
 						<select
 							className='select select-bordered'

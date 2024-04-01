@@ -56,7 +56,7 @@ const RoomCardEdit: React.FC<RoomCardEditProps> = ({ r }) => {
 		}>
 			<form className='card-body' id="myForm">
 				
-				<h1 className='card-title'>Room ID: {r.room_id}</h1>
+				<h1 className='card-title'>Room ID: {r.id}</h1>
 				<h2>Price:</h2>
 				<textarea
 					className='textarea textarea-bordered'

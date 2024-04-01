@@ -66,7 +66,7 @@ export default function Header() {
 						<Link
 							className={admin ? "nav-link font-weight-bold" : "hidden"}
 							to={"/managehotels"}>
-							Manage Rooms
+							Manage Hotels
 						</Link>
 					</li>
 					<li>

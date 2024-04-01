@@ -306,6 +306,7 @@ router.get("/:id", async (req, res) => {
 	res.json(hotels.rows[0]);
 });
 
+
 // delete hotel by id
 router.delete("/:id", async (req, res) => {
 	const hotels = await pool.query<Hotel>(

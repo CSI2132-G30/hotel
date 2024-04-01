@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import RoomCardEdit from "./RoomCardEdit";
 import axios from "axios";
 import { onChange } from "../utils/event";
+import RoomCardCreate from "./RoomCardCreate";
 
 interface HotelCardEditProps {
 	h: Hotel;
@@ -17,6 +18,18 @@ const HotelCardEdit: React.FC<HotelCardEditProps> = ({ h }) => {
 	const [num_rooms, setNumRooms] = useState<number>(h.num_rooms);
 	const [manager, setManager] = useState<string>(h.manager);
 	const [deleted, setDeleted] = useState<boolean>(false);
+	const [managers, setManagers] = useState<User[]>([]);
+
+	async function getManagers() {
+		try {
+			const res = await axios.get(`http://localhost:4040/users/employees`);
+			console.log(res.data);
+			setManagers(res.data);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	}
+
 	
 	async function updateHotel() {
 		try {
@@ -53,6 +66,7 @@ const HotelCardEdit: React.FC<HotelCardEditProps> = ({ h }) => {
 	}
 	useEffect(() => {
 		getRooms();
+		getManagers();
 	}, []);
 	return (
 		<div className={deleted ? 'flex flex-row justify-center items-center w-full hidden' :'flex flex-row justify-center items-center w-full '}>
@@ -98,18 +112,22 @@ const HotelCardEdit: React.FC<HotelCardEditProps> = ({ h }) => {
 						placeholder={h.chain}
 						value={chain}
 						onChange={(v) => setChain(v.target.value)}></textarea>
-					<h3>num_rooms:</h3>
+					<h3>number of rooms:</h3>
 					
 					<div>
 						{num_rooms.toString()}
 					</div>
 
 					<h3>manager:</h3>
-					<textarea
-						className='textarea textarea-bordered'
-						placeholder={h.manager.toString()}
-						value={manager.toString()}
-						onChange={(v) => setManager(v.target.value)}></textarea>
+					<select
+							className='select select-bordered'
+							
+							value={manager}
+							onChange={(v) => setManager(v.target.value)}>
+                            {managers.map((c) => (
+                                <option>{c.ssn}</option>
+                            ))}
+                            </select>
 					
 					<button className="btn btn-primary" onClick={updateHotel}>Update</button>
 					<button className="btn btn-error" onClick={deleteHotel}>Delete</button>
@@ -118,6 +136,7 @@ const HotelCardEdit: React.FC<HotelCardEditProps> = ({ h }) => {
 					{rooms.map((h) => (
 						<RoomCardEdit r={h}></RoomCardEdit>
 					))}
+					<RoomCardCreate></RoomCardCreate>
 				</div>
 			</div>
 		</div>
