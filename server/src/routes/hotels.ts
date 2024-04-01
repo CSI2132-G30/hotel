@@ -172,6 +172,17 @@ router.get("/average/:id", async (req, res) => {
 	res.json(average.rows[0].avg);
 });
 
+router.get("/available/:city", async (req, res) => {
+	const available = await pool.query(
+		`SELECT city, num_available_rooms
+		FROM available_rooms_per_city
+		WHERE city = $1`,
+		[req.params.city]
+	);
+	res.json(available.rows[0].num_available_rooms);
+}
+);
+
 router.get("/luxury/:city", async (req, res) => {
 	const average = await pool.query(
 		`WITH average_stars AS (

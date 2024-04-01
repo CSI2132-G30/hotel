@@ -12,6 +12,7 @@ export default function Bookings() {
 	const [admin, setAdmin] = useState(false);
 	const [customers, setCustomers] = useState<User[]>([]);
 	const [customer_id, setCustomer_id] = useState<string>("111 111 111");
+	const [view, setView] = useState<number>();
 
 	async function getCities() {
 		try {
@@ -44,6 +45,16 @@ export default function Bookings() {
 		}
 	}
 
+	async function getView(city: string) {
+		try {
+			const res = await axios.get(`http://localhost:4040/hotels/available/${city}`);
+			setView(res.data);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	
+	}
+
 	useEffect(() => {
 		if (JSON.parse(localStorage.getItem("admin")!)) {
 			setAdmin(true);
@@ -57,6 +68,7 @@ export default function Bookings() {
 
 		getCustomers();
 		getCities();
+		getView(city);
 	}, []);
 	return (
 		<>
@@ -83,8 +95,9 @@ export default function Bookings() {
 							className='select select-bordered w-full max-w-xs'
 							value={city}
 							onChange={(v) => setCity(v.target.value)}>
-							{cities.map((c) => (
-								<option>{c.city}</option>
+							{cities.map( (c) => (
+
+								<option>{c.city} {view}</option>
 							))}
 						</select>
 						<div className='flex flex-row justify-center items-center gap-2'>

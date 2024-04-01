@@ -30,6 +30,7 @@ const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b }) => {
     async function getRooms() {
         try {
             const res = await axios.get(`http://localhost:4040/hotels/hotel/rooms/?hotel_id=${b.room_id}`);
+            console.log(res.data);
             setRooms(res.data);
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -86,7 +87,7 @@ const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b }) => {
 							className='select select-bordered'
 							
 							value={room_id}
-							onChange={(v) => setRoom_id(v.target.value)}>
+							onChange={(v) => setRoom_id(parseInt(v.target.value))}>
                             {rooms.map((c) => (
                                 <option>{c.room_id}</option>
                             ))}
