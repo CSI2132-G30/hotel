@@ -3,8 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { onChange } from "../utils/event";
 
+interface RoomCardCreateProps {
+	h: Hotel;
+}
 
-export default function RoomCardCreate() {
+const RoomCardCreate: React.FC<RoomCardCreateProps> = ({ h }) => {
+    console.log(h.id);
 	const [room_id, setRoom_id] = useState<number>();
 	const [hotel_id, setHotel_id] = useState<number>();
 	const [number, setNumber] = useState<number>();
@@ -12,13 +16,14 @@ export default function RoomCardCreate() {
 	const [capacity, setCapacity] = useState<number>();
 	const [view, setView] = useState<string>();
 	const [amenities, setAmenities] = useState<string>();
-	const [extendible, setExtendible] = useState<boolean>();
-	const [damage, setDamage] = useState<boolean>();
+	const [extendible, setExtendible] = useState<boolean>(false);
+	const [damage, setDamage] = useState<boolean>(false);
 
     async function createRoom() {
+        console.log(`http://localhost:4040/hotels/rooms?hotel=${h.id}&number=${number}&price=${price}&capacity=${capacity}&view=${view}&amenities=${amenities}&extendible=${extendible}&damage=${damage}`)
         try {
             await axios.post(
-                `http://localhost:4040/hotels/rooms?hotel_id=${hotel_id}&number=${number}&price=${price}&capacity=${capacity}&view=${view}&amenities=${amenities}&extendible=${extendible}&damage=${damage}`
+                `http://localhost:4040/hotels/rooms?hotel=${h.id}&number=${number}&price=${price}&capacity=${capacity}&view=${view}&amenities=${amenities}&extendible=${extendible}&damage=${damage}`
             );
         }
         catch (error) {
@@ -87,4 +92,5 @@ export default function RoomCardCreate() {
 		</div>
 	);
 };
+export default RoomCardCreate;
 

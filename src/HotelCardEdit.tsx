@@ -136,7 +136,7 @@ const HotelCardEdit: React.FC<HotelCardEditProps> = ({ h }) => {
 					{rooms.map((h) => (
 						<RoomCardEdit r={h}></RoomCardEdit>
 					))}
-					<RoomCardCreate></RoomCardCreate>
+					<RoomCardCreate h={h}></RoomCardCreate>
 				</div>
 			</div>
 		</div>
