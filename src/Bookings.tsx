@@ -70,6 +70,11 @@ export default function Bookings() {
 		getCities();
 		getView(city);
 	}, []);
+
+	useEffect(() => {
+		getView(city); 
+	}, [city]);
+
 	return (
 		<>
 			<div className='flex-column text-center justify-center items-center align-middle'>
@@ -96,8 +101,7 @@ export default function Bookings() {
 							value={city}
 							onChange={(v) => setCity(v.target.value)}>
 							{cities.map( (c) => (
-
-								<option>{c.city} {view}</option>
+								<option>{c.city}</option>
 							))}
 						</select>
 						<div className='flex flex-row justify-center items-center gap-2'>
@@ -136,6 +140,7 @@ export default function Bookings() {
 				</div>
 				<div className='w-full flex justify-center pt-6'>
 					<div className='w-1/2 flex flex-col gap-2 align-middle justify-center items-center'>
+					<div>{city} has {view} total rooms available</div>
 						{hotels.map((c) => (
 							<HotelCard
 								h={c}
@@ -144,6 +149,7 @@ export default function Bookings() {
 						))}
 					</div>
 				</div>
+				
 			</div>
 		</>
 	);
