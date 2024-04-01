@@ -8,7 +8,7 @@ interface RoomCardEditProps {
 }
 
 const RoomCardEdit: React.FC<RoomCardEditProps> = ({ r }) => {
-	const [room_id, setRoom_id] = useState<number>(r.id);
+	const [room_id, setRoom_id] = useState<number>(r.room_id);
 	const [hotel_id, setHotel_id] = useState<number>(r.hotel);
 	const [number, setNumber] = useState<number>(r.number);
 	const [price, setPrice] = useState<number>(r.price);
@@ -30,7 +30,7 @@ const RoomCardEdit: React.FC<RoomCardEditProps> = ({ r }) => {
 
 		try {
 			await axios.patch(
-				`http://localhost:4040/hotels/rooms/${r.id}?hotel_id=${hotel_id}&number=${number}&price=${price}&capacity=${capacity}&view=${view}&amenities=${amenities}&extendible=${extendible}&damage=${damage}`
+				`http://localhost:4040/hotels/rooms/${r.room_id}?hotel_id=${hotel_id}&number=${number}&price=${price}&capacity=${capacity}&view=${view}&amenities=${amenities}&extendible=${extendible}&damage=${damage}`
 			);
 		} catch (error) {
 			console.error("Error fetching data:", error);
@@ -39,7 +39,7 @@ const RoomCardEdit: React.FC<RoomCardEditProps> = ({ r }) => {
 
 	async function deleteRoom() {
 		try {
-			await axios.delete(`http://localhost:4040/hotels/rooms/${r.id}`);
+			await axios.delete(`http://localhost:4040/hotels/rooms/${r.room_id}`);
 			setDeleted(true);
 		} catch (error) {
 			console.error("Error fetching data:", error);
@@ -56,7 +56,7 @@ const RoomCardEdit: React.FC<RoomCardEditProps> = ({ r }) => {
 		}>
 			<form className='card-body' id="myForm">
 				
-				<h1 className='card-title'>Room ID: {r.id}</h1>
+				<h1 className='card-title'>Room ID: {r.room_id}</h1>
 				<h2>Price:</h2>
 				<textarea
 					className='textarea textarea-bordered'
