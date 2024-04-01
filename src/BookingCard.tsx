@@ -8,6 +8,7 @@ interface HotelCardProps {
 
 const BookingCard: React.FC<HotelCardProps> = ({ b }) => {
 	const [cancelled, setCancelled] = useState<boolean>(false);
+	const stars = [b.stars>=1 ? "★" : "☆", b.stars>=2 ? "★" : "☆", b.stars>=3 ? "★" : "☆", b.stars>=4 ? "★" : "☆", b.stars>=5 ? "★" : "☆"];
 	async function deleteBooking() {
 		try {
 			await axios.delete(
@@ -28,18 +29,20 @@ const BookingCard: React.FC<HotelCardProps> = ({ b }) => {
 					? "card w-96 bg-base-100 shadow-xl hidden"
 					: "card w-96 bg-base-100 shadow-xl"
 			}>
-			<div className='card-body'>
-				<h1 className='card-title text-center justify-center'>
+			<div className='card-body text-left'>
+				<h1 className='card-title'>
 					{b.name}, {b.city}
 				</h1>
 				<h2>{b.num_rooms} room(s)</h2>
-				<h2>{b.stars}/5 Stars</h2>
+				<h2>{(stars).map((star) => (
+						star
+					))}</h2>
 				<p>Start: {moment(b.start_date).utc().format("YYYY-MM-DD")}</p>
 				<p>End: {moment(b.end_date).utc().format("YYYY-MM-DD")}</p>
 				<h2>Address: {b.address}</h2>
-				<div className='card-actions justify-end'>
-					<button className='btn btn-warning' onClick={deleteBooking}>
-						Cancel
+				<div className='card-actions justify-left'>
+					<button className='btn btn-error' onClick={deleteBooking}>
+						Cancel Booking
 					</button>
 				</div>
 			</div>

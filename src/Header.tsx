@@ -32,16 +32,16 @@ export default function Header() {
 				<ul className='menu menu-horizontal px-1'>
 					<li>
 						{login ? (
-							<Link onClick={handleLogoutClick} to={"/"}>
+							<Link className = "text-error" onClick={handleLogoutClick} to={"/"}>
 								Logout
 							</Link>
 						) : (
-							<a href='/login'>Login</a>
+							<a className = "text-success" href='/login'>Login</a>
 						)}
 					</li>
 					<li>
 						<Link className='nav-link font-weight-bold' to={"/account"}>
-							Account
+							My Bookings
 						</Link>
 					</li>
 					<li>
@@ -50,17 +50,17 @@ export default function Header() {
 						</Link>
 					</li>
 					<li>
-						<Link className={admin ? 'nav-link font-weight-bold' : 'nav-link font-weight-bold hidden'} to={"/managebookings"}>
+						<Link className={admin ? 'nav-link font-weight-bold' : 'nav-link btn-error btn-disabled'} to={"/managebookings"}>
 							Manage Bookings
 						</Link>
 					</li>
 						<li>
-						<Link className={admin ? 'nav-link font-weight-bold' : 'nav-link font-weight-bold hidden'} to={"/managehotels"}>
+						<Link className={admin ? 'nav-link font-weight-bold' : 'nav-link btn-error btn-disabled'} to={"/managehotels"}>
 							Manage Rooms
 						</Link>
 						</li>
 						<li>
-						<Link className={admin ? 'nav-link font-weight-bold' : 'nav-link font-weight-bold hidden'} to={"/manageusers"}>
+						<Link className={admin ? 'nav-link font-weight-bold' : 'nav-link btn-error btn-disabled'} to={"/manageusers"}>
 							Manage Users
 						</Link>
 						</li>

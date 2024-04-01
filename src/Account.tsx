@@ -26,7 +26,7 @@ export default function Account() {
 	return (
 		<>
 			<div className='flex-column text-center'>
-				<h1 className='text-center text-6xl py-8'>Account</h1>
+				<h1 className='text-center text-6xl py-8'>My Bookings</h1>
 				<div className='flex flex-row flex-wrap gap-2 items-center justify-center'>
 					{bookings.map((b) => (
 						<BookingCard b={b}></BookingCard>

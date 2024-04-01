@@ -21,7 +21,7 @@ export default function App() {
 	}, []);
 
 	return (
-		<div className='flex-column text-center justify-center gap-4'>
+		<>
 			<h1 className='text-center text-6xl py-8'>Five World Class Chains</h1>
 			<div className='flex flex-wrap items-center justify-center gap-5'>
 				{chains.map((chain) => (
@@ -40,6 +40,6 @@ export default function App() {
 					</Link>
 				))}
 			</div>
-		</div>
+		</>
 	);
 }

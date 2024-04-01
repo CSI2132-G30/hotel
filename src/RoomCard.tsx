@@ -28,7 +28,7 @@ const RoomCard: React.FC<RoomCardProps> = ({ r, startDate, endDate }) => {
 	return (
 		<div className='card w-96 bg-base-100 shadow-xl'>
 			<div className='card-body'>
-				<h1 className='card-title'>Room Number: {r.number}</h1>
+				<h1 className='card-title'>Room {r.number}</h1>
 				<h2>Price: {r.price}</h2>
 				<h3>Capacity: {r.capacity}</h3>
 				<p>{r.view}</p>

@@ -11,6 +11,7 @@ interface HotelCardProps {
 const HotelCard: React.FC<HotelCardProps> = ({ h, startDate, endDate }) => {
 	const [rooms, setRooms] = useState<Room[]>([]);
 	const [average, setAverage] = useState<number>();
+	const stars = [h.stars>=1 ? "★" : "☆", h.stars>=2 ? "★" : "☆", h.stars>=3 ? "★" : "☆", h.stars>=4 ? "★" : "☆", h.stars>=5 ? "★" : "☆"];
 
 	async function getRooms() {
 		try {
@@ -42,7 +43,9 @@ const HotelCard: React.FC<HotelCardProps> = ({ h, startDate, endDate }) => {
 			<div className='collapse bg-base-200'>
 				<input type='checkbox' className='peer' />
 				<div className='collapse-title border border-base-300 bg-base-200 '>
-					<span className=' text-yellow-300'>{h.stars}/5 </span> {h.name},
+					<span className=' text-yellow-300'>{(stars).map((star) => (
+						star
+					))} </span> {h.name},
 					Average Price: {Math.round((average ?? 500) * 100) / 100}
 				</div>
 
