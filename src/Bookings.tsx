@@ -47,8 +47,14 @@ export default function Bookings() {
 	useEffect(() => {
 		if (JSON.parse(localStorage.getItem("admin")!)) {
 			setAdmin(true);
+			localStorage.setItem("customerID", customer_id);
+		} else {
+			localStorage.setItem(
+				"customerID",
+				JSON.parse(localStorage.getItem("token")!).ssn
+			);
 		}
-		localStorage.setItem("customerID", customer_id);
+
 		getCustomers();
 		getCities();
 	}, []);
