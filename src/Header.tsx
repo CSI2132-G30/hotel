@@ -36,9 +36,9 @@ export default function Header() {
 								Logout
 							</Link>
 						) : (
-							<a className='text-success' href='/login'>
+							<Link className='text-success' to={"/login"}>
 								Login
-							</a>
+							</Link>
 						)}
 					</li>
 					<li>
