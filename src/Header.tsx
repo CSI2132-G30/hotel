@@ -9,7 +9,7 @@ export default function Header() {
 		if (localStorage.getItem("token")) {
 			setHandledLogin(true);
 		}
-		if (localStorage.getItem("admin")) {
+		if (JSON.parse(localStorage.getItem("admin")!)) {
 			setAdmin(true);
 		}
 	}, []);
@@ -40,32 +40,52 @@ export default function Header() {
 						)}
 					</li>
 					<li>
-						<Link className='nav-link font-weight-bold' to={"/account"}>
+						<Link
+							className={login ? "nav-link font-weight-bold" : "hidden"}
+							to={"/account"}>
 							Account
 						</Link>
 					</li>
 					<li>
-						<Link className='nav-link font-weight-bold' to={"/bookings"}>
+						<Link
+							className={login ? "nav-link font-weight-bold" : "hidden"}
+							to={"/bookings"}>
 							Book Now
 						</Link>
 					</li>
 					<li>
-						<Link className={admin ? 'nav-link font-weight-bold' : 'nav-link font-weight-bold hidden'} to={"/managebookings"}>
+						<Link
+							className={
+								admin
+									? "nav-link font-weight-bold"
+									: "nav-link font-weight-bold hidden"
+							}
+							to={"/managebookings"}>
 							Manage Bookings
 						</Link>
 					</li>
-						<li>
-						<Link className={admin ? 'nav-link font-weight-bold' : 'nav-link font-weight-bold hidden'} to={"/managehotels"}>
+					<li>
+						<Link
+							className={
+								admin
+									? "nav-link font-weight-bold"
+									: "nav-link font-weight-bold hidden"
+							}
+							to={"/managehotels"}>
 							Manage Rooms
 						</Link>
-						</li>
-						<li>
-						<Link className={admin ? 'nav-link font-weight-bold' : 'nav-link font-weight-bold hidden'} to={"/manageusers"}>
+					</li>
+					<li>
+						<Link
+							className={
+								admin
+									? "nav-link font-weight-bold"
+									: "nav-link font-weight-bold hidden"
+							}
+							to={"/manageusers"}>
 							Manage Users
 						</Link>
-						</li>
-					
-					
+					</li>
 				</ul>
 			</div>
 		</div>
