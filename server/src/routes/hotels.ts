@@ -237,7 +237,6 @@ router.patch("/rooms/:id", async (req, res) => {
 });
 
 router.post("/rooms", async (req, res) => {
-	console.log(req.query, req.params);
 	const { rows } = await pool.query<Room>(
 		`
 		INSERT INTO room (hotel, number, price, capacity, view, amenities, extendible, damage)
