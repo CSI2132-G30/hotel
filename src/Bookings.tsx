@@ -107,7 +107,7 @@ export default function Bookings() {
 						</div>
 						<div className='form-control justify-center'>
 							<label className='cursor-pointer label'>
-								<span className='label-text px-2'>Luxury Only</span>
+								<span className='label-text px-2'>Luxury</span>
 								<input
 									type='checkbox'
 									className='checkbox checkbox-success'

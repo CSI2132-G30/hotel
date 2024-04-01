@@ -8,7 +8,7 @@ interface HotelCardProps {
 
 const BookingCard: React.FC<HotelCardProps> = ({ b }) => {
 	const [cancelled, setCancelled] = useState<boolean>(false);
-	const stars = [b.stars>=1 ? "★" : "☆", b.stars>=2 ? "★" : "☆", b.stars>=3 ? "★" : "☆", b.stars>=4 ? "★" : "☆", b.stars>=5 ? "★" : "☆"];
+
 	async function deleteBooking() {
 		try {
 			await axios.delete(
@@ -34,9 +34,7 @@ const BookingCard: React.FC<HotelCardProps> = ({ b }) => {
 					{b.name}, {b.city}
 				</h1>
 				<h2>{b.num_rooms} room(s)</h2>
-				<h2>{(stars).map((star) => (
-						star
-					))}</h2>
+				<h2>{b.stars}</h2>
 				<p>Start: {moment(b.start_date).utc().format("YYYY-MM-DD")}</p>
 				<p>End: {moment(b.end_date).utc().format("YYYY-MM-DD")}</p>
 				<h2>Address: {b.address}</h2>
