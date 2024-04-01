@@ -15,7 +15,7 @@ const HotelCardEdit: React.FC<HotelCardEditProps> = ({ h }) => {
 	const [city, setCity] = useState<string>(h.city);
 	const [chain, setChain] = useState<string>(h.chain);
 	const [num_rooms, setNumRooms] = useState<number>(h.num_rooms);
-	const [manager, setManager] = useState<number>(h.manager);
+	const [manager, setManager] = useState<string>(h.manager);
 	const [deleted, setDeleted] = useState<boolean>(false);
 	
 	async function updateHotel() {
@@ -109,7 +109,7 @@ const HotelCardEdit: React.FC<HotelCardEditProps> = ({ h }) => {
 						className='textarea textarea-bordered'
 						placeholder={h.manager.toString()}
 						value={manager.toString()}
-						onChange={(v) => setManager(parseInt(v.target.value))}></textarea>
+						onChange={(v) => setManager(v.target.value)}></textarea>
 					
 					<button className="btn btn-primary" onClick={updateHotel}>Update</button>
 					<button className="btn btn-error" onClick={deleteHotel}>Delete</button>

@@ -10,8 +10,8 @@ interface BookingCardEditProps {
 const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b }) => {
 	const [room_id, setRoom_id] = useState<number>(b.room_id);
 	const [customer_id, setCustomer_id] = useState<string>(b.customer_id);
-	const [start_date, setStart_date] = useState<Date>(b.start_date);
-	const [end_date, setEnd_date] = useState<Date>(b.end_date);
+	const [start_date, setStart_date] = useState<string>(moment(b.start_date).utc().format("YYYY-MM-DD"));
+	const [end_date, setEnd_date] = useState<string>(moment(b.end_date).utc().format("YYYY-MM-DD"));
 	const [checked_in, setChecked_in] = useState<boolean>(b.checked_in);
 	const [cancelled, setCancelled] = useState<boolean>(false);
     const [customers, setCustomers] = useState<User[]>([]);
@@ -92,13 +92,13 @@ const BookingCardEdit: React.FC<BookingCardEditProps> = ({ b }) => {
 						<input
 							className='textarea textarea-bordered'
 							type='date'
-							value={moment(b.start_date).utc().format("YYYY-MM-DD")}
-							onChange={onChange(setStart_date)}></input>
+							value={start_date}
+							onChange={(v) => {setStart_date(v.target.value)}}></input>
 						<p>End Date:</p>
 						<input
 							className='textarea textarea-bordered'
 							type='date'
-							value={moment(b.end_date).utc().format("YYYY-MM-DD")}
+							value={end_date}
 							onChange={onChange(setEnd_date)}></input>
 						<p>Checked in?:</p>
 						<input

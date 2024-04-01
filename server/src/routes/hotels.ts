@@ -89,8 +89,7 @@ router.get("/bookings/:hotel_id", async (req, res) => {
 		INNER JOIN room r ON h.id = r.hotel
 		INNER JOIN booking b ON r.id = b.room_id
 		WHERE h.id = $1
-		ORDER BY r.id ASC, b.start_date ASC`
-		,
+		ORDER BY r.id ASC, b.start_date ASC`,
 		[req.params.hotel_id]
 	);
 
@@ -98,7 +97,7 @@ router.get("/bookings/:hotel_id", async (req, res) => {
 });
 
 // post booking
-router.post("/booking", async (req, res) => {
+router.post("/booking/:id", async (req, res) => {
 	const { rows } = await pool.query<Booking>(
 		`INSERT INTO booking (room_id, customer_id, start_date, end_date, checked_in)
 		VALUES
@@ -106,7 +105,7 @@ router.post("/booking", async (req, res) => {
 		RETURNING *
 `,
 		[
-			req.query.room_id,
+			req.params.id,
 			req.query.customer_id,
 			req.query.start_date,
 			req.query.end_date,

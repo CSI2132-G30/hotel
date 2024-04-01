@@ -11,7 +11,7 @@ export default function Bookings() {
 	const [hotels, setHotels] = useState<Hotel[]>([]);
 	const [admin, setAdmin] = useState(false);
 	const [customers, setCustomers] = useState<User[]>([]);
-	const [customer_id, setCustomer_id] = useState<string>();
+	const [customer_id, setCustomer_id] = useState<string>("111 111 111");
 
 	async function getCities() {
 		try {
@@ -47,7 +47,14 @@ export default function Bookings() {
 	useEffect(() => {
 		if (JSON.parse(localStorage.getItem("admin")!)) {
 			setAdmin(true);
+			localStorage.setItem("customerID", customer_id);
+		} else {
+			localStorage.setItem(
+				"customerID",
+				JSON.parse(localStorage.getItem("token")!).ssn
+			);
 		}
+
 		getCustomers();
 		getCities();
 	}, []);
@@ -61,7 +68,10 @@ export default function Bookings() {
 					<select
 						className='select select-bordered'
 						value={customer_id}
-						onChange={(v) => setCustomer_id(v.target.value)}>
+						onChange={(v) => {
+							setCustomer_id(v.target.value);
+							localStorage.setItem("customerID", v.target.value);
+						}}>
 						{customers.map((c) => (
 							<option>{c.ssn}</option>
 						))}

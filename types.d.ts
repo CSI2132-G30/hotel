@@ -9,9 +9,9 @@ declare global {
 		city: string;
 		num_rooms: number;
 		address: string;
-		manager: number;
+		manager: string;
 	};
-	
+
 	type Chain = {
 		id: number;
 		name: string;
@@ -37,7 +37,7 @@ declare global {
 	};
 
 	type Room = {
-		id: number;
+		room_id: number;
 		hotel: number;
 		number: number;
 		price: number;

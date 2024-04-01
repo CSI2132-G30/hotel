@@ -8,14 +8,20 @@ interface RoomCardProps {
 }
 
 const RoomCard: React.FC<RoomCardProps> = ({ r, startDate, endDate }) => {
+	console.log(r);
 	const navigate = useNavigate();
 	async function makeBooking() {
+		console.log(
+			`http://localhost:4040/hotels/booking/${r.room_id}?customer_id=${
+				localStorage.getItem("customerID") ??
+				JSON.parse(localStorage.getItem("token")!).ssn
+			}&start_date=${startDate}&end_date=${endDate}&checked_in=FALSE`
+		);
 		try {
 			await axios.post(
 				// change the customer id
-				`http://localhost:4040/hotels/booking?room_id=${
-					r.id
-				}&customer_id=${
+				`http://localhost:4040/hotels/booking/${r.room_id}?customer_id=${
+					localStorage.getItem("customerID") ??
 					JSON.parse(localStorage.getItem("token")!).ssn
 				}&start_date=${startDate}&end_date=${endDate}&checked_in=FALSE`
 			);
