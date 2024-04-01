@@ -220,7 +220,6 @@ router.get("/rooms/:id", async (req, res) => {
 	const rooms = await pool.query<Room>("SELECT * FROM room WHERE id = $1", [
 		req.params.id,
 	]);
-	console.log(rooms.rows);
 	res.json(rooms.rows);
 });
 
