@@ -41,14 +41,14 @@ export default function Header() {
 					</li>
 					<li>
 						<Link
-							className={login ? "nav-link font-weight-bold" : "hidden"}
+							className={login ? "nav-link font-weight-bold" : "btn-error btn-disabled"}
 							to={"/account"}>
 							My Bookings
 						</Link>
 					</li>
 					<li>
 						<Link
-							className={login ? "nav-link font-weight-bold" : "hidden"}
+							className={login ? "nav-link font-weight-bold" : "btn-error btn-disabled"}
 							to={"/bookings"}>
 							Book Now
 						</Link>
@@ -69,7 +69,7 @@ export default function Header() {
 							className={
 								admin
 									? "nav-link font-weight-bold"
-									: "nav-link font-weight-bold hidden"
+									: "nav-link btn-error btn-disabled"
 							}
 							to={"/managehotels"}>
 							Manage Rooms
@@ -80,7 +80,7 @@ export default function Header() {
 							className={
 								admin
 									? "nav-link font-weight-bold"
-									: "nav-link font-weight-bold hidden"
+									: "nav-link btn-error btn-disabled"
 							}
 							to={"/manageusers"}>
 							Manage Users
