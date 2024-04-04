@@ -116,7 +116,7 @@ import { userRouter } from "./routes/users";
 		UPDATE chain SET num_hotels = chain.num_hotels+1 WHERE chain.id = NEW.chain;
 	END IF;
 	IF (TG_OP = 'DELETE') THEN
-		UPDATE chain SET num_hotels = chain.num_hotels-1 WHERE chain.id = NEW.chain;
+		UPDATE chain SET num_hotels = chain.num_hotels-1 WHERE chain.id = OLD.chain;
 	END IF;
 	RETURN NEW;
 	END;
@@ -131,11 +131,11 @@ import { userRouter } from "./routes/users";
 	// function for the room count trigger
 	await pool.query(`CREATE OR REPLACE FUNCTION update_room_count() RETURNS TRIGGER AS $$
 	BEGIN	
+	IF (TG_OP = 'DELETE') THEN
+		UPDATE hotel SET num_rooms = hotel.num_rooms-1 WHERE hotel.id = OLD.hotel;
+	END IF;
 	IF (TG_OP = 'INSERT') THEN	
 		UPDATE hotel SET num_rooms = hotel.num_rooms+1 WHERE hotel.id = NEW.hotel;
-	END IF;
-	IF (TG_OP = 'DELETE') THEN
-		UPDATE hotel SET num_rooms = hotel.num_rooms-1 WHERE hotel.id = NEW.hotel;
 	END IF;
 	RETURN NEW;
 	END;
